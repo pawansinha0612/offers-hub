@@ -26,23 +26,23 @@ function App() {
             <table border="1" cellPadding="10" style={{ marginTop: "20px" }}>
                 <thead>
                 <tr>
-                    <th>Store</th>
-                    <th>New User Cashback</th>
-                    <th>Existing User Cashback</th>
+                    <th>Cashback (%)</th>
+                    {/*<th>Existing User Cashback</th>*/}
                     <th>Link</th>
-                    <th>Category</th>
+                    <th>Store</th>
+                    {/*<th>Category</th>*/}
                 </tr>
                 </thead>
                 <tbody>
                 {filteredOffers.map((offer, idzx) => (
                     <tr key={idx}>
-                        <td>{offer.Store}</td>
-                        <td>{offer["New User Cashback"]}</td>
-                        <td>{offer["Existing User Cashback"]}</td>
+                        <td>{offer["Cashback (%)"]}</td>
+                        {/*<td>{offer["Existing User Cashback"]}</td>*/}
                         <td>
                             <a href={offer.Link} target="_blank" rel="noreferrer">Visit</a>
                         </td>
-                        <td>{offer.Category}</td>
+                        <td>{offer.Store}</td>
+                        {/*<td>{offer.Category}</td>*/}
                     </tr>
                 ))}
                 </tbody>
