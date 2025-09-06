@@ -3,6 +3,9 @@ from flask_cors import CORS
 import csv
 import subprocess
 import asyncio
+import sys
+print("Python version:", sys.version)
+
 from playwright.async_api import async_playwright
 
 app = Flask(__name__)
