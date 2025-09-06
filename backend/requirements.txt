@@ -1,5 +1,5 @@
+greenlet>=3.0.3
+gevent>=22.10.2
 Flask==2.3.2
 Flask-Cors==3.0.10
 playwright==1.43.0
-greenlet==2.0.2
-gevent==22.10.2
