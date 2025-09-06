@@ -3,7 +3,11 @@ services:
     name: offers-hub-backend
     env: python
     plan: free
-    pythonVersion: 3.10.13
-    buildCommand: bash -c "rm -rf .venv && pip install --upgrade pip setuptools wheel && pip install -r backend/requirements.txt && playwright install"
+    pythonVersion: 3.10.13  # stable version for greenlet/gevent
+    buildCommand: bash -c "\
+      echo '🧹 Cleaning previous builds...' && \
+      rm -rf .venv build *.egg-info && \
+      pip install --upgrade pip setuptools wheel && \
+      pip install -r backend/requirements.txt && \
+      playwright install"
     startCommand: python backend/app.py
-
