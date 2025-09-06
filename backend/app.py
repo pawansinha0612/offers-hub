@@ -1,20 +1,32 @@
-import asyncio
-import csv
 from flask import Flask, jsonify
 from flask_cors import CORS
+import csv
+import subprocess
+import asyncio
 from playwright.async_api import async_playwright
-import os
 
 app = Flask(__name__)
 CORS(app)
 
-CSV_FILE = os.path.join(os.path.dirname(__file__), "shopback_offers.csv")
+CSV_FILE = "shopback_offers.csv"
 
 
-# --- Playwright scraper (your code, wrapped) ---
+# Ensure Playwright Chromium is installed (important for Render)
+def ensure_playwright_browser():
+    try:
+        subprocess.run(
+            ["playwright", "install", "chromium"],
+            check=True
+        )
+        print("✅ Playwright Chromium installed or already available")
+    except Exception as e:
+        print(f"⚠️ Failed to install Playwright browser: {e}")
+
+
+# Background scraper task
 async def scrape_shopback():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)  # headless for Render
+        browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
 
         await page.goto("https://www.shopback.com.au/all-stores", timeout=60000)
@@ -24,10 +36,9 @@ async def scrape_shopback():
             await page.mouse.wheel(0, 3000)
             await page.wait_for_timeout(2000)
 
-        # Grab merchant cards
         cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-
         scraped = []
+
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
             cashback = await card.get_attribute("data-max-cashback-rate")
@@ -39,44 +50,42 @@ async def scrape_shopback():
                 link.strip() if link else "N/A"
             ])
 
-        await browser.close()
-
-        # Save to CSV
         with open(CSV_FILE, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Store", "Cashback (%)", "Link"])
             writer.writerows(scraped)
 
+        await browser.close()
         print(f"✅ Scraped {len(scraped)} offers into {CSV_FILE}")
-        return scraped
 
 
-def read_offers_from_csv():
-    offers = []
-    if not os.path.exists(CSV_FILE):
-        return offers
-    with open(CSV_FILE, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            offers.append(row)
-    return offers
-
-
-@app.route("/offers", methods=["GET"])
-def get_offers():
+@app.route("/offers")
+def offers():
+    data = []
     try:
-        # Try live scrape
-        offers = asyncio.run(scrape_shopback())
-        return jsonify([
-            {"Store": o[0], "Cashback (%)": o[1], "Link": o[2]}
-            for o in offers
-        ])
+        with open(CSV_FILE, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                data.append(row)
     except Exception as e:
-        print(f"❌ Scrape failed: {e}. Falling back to CSV.")
-        # Fallback to last saved CSV
-        return jsonify(read_offers_from_csv())
+        return {"error": str(e)}, 500
+    return jsonify(data)
+
+
+@app.route("/scrape-now")
+def scrape_now():
+    try:
+        asyncio.run(scrape_shopback())
+        return {"status": "Scraping finished, CSV updated."}
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+
+@app.route("/")
+def home():
+    return "✅ Offers Hub backend is running. Visit /offers to see data."
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    ensure_playwright_browser()
+    app.run(debug=True, host="0.0.0.0", port=5000)
