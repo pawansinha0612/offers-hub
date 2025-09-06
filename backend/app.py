@@ -1,9 +1,10 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import csv
-import subprocess
 import asyncio
 import sys
+import os
+
 print("Python version:", sys.version)
 
 from playwright.async_api import async_playwright
@@ -12,19 +13,6 @@ app = Flask(__name__)
 CORS(app)
 
 CSV_FILE = "shopback_offers.csv"
-
-
-# Ensure Playwright Chromium is installed (important for Render)
-def ensure_playwright_browser():
-    try:
-        subprocess.run(
-            ["playwright", "install", "chromium"],
-            check=True
-        )
-        print("✅ Playwright Chromium installed or already available")
-    except Exception as e:
-        print(f"⚠️ Failed to install Playwright browser: {e}")
-
 
 # Background scraper task
 async def scrape_shopback():
@@ -53,6 +41,7 @@ async def scrape_shopback():
                 link.strip() if link else "N/A"
             ])
 
+        # Write CSV
         with open(CSV_FILE, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Store", "Cashback (%)", "Link"])
@@ -61,9 +50,12 @@ async def scrape_shopback():
         await browser.close()
         print(f"✅ Scraped {len(scraped)} offers into {CSV_FILE}")
 
+# Endpoint to get offers
 @app.route("/offers")
 def offers():
     data = []
+    if not os.path.exists(CSV_FILE):
+        return jsonify(data)  # Return empty list if CSV doesn't exist
     try:
         with open(CSV_FILE, newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -73,7 +65,7 @@ def offers():
         return {"error": str(e)}, 500
     return jsonify(data)
 
-
+# Endpoint to scrape now manually
 @app.route("/scrape-now")
 def scrape_now():
     try:
@@ -82,12 +74,17 @@ def scrape_now():
     except Exception as e:
         return {"error": str(e)}, 500
 
-
+# Home endpoint
 @app.route("/")
 def home():
     return "✅ Offers Hub backend is running. Visit /offers to see data."
 
-
 if __name__ == "__main__":
-    ensure_playwright_browser()
+    # Optional: initial scrape at startup
+    if not os.path.exists(CSV_FILE):
+        try:
+            asyncio.run(scrape_shopback())
+        except Exception as e:
+            print(f"⚠️ Initial scrape failed: {e}")
+
     app.run(debug=True, host="0.0.0.0", port=5000)
