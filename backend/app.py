@@ -4,6 +4,8 @@ import csv
 import asyncio
 import sys
 import os
+import threading
+import subprocess
 
 print("Python version:", sys.version)
 
@@ -13,6 +15,14 @@ app = Flask(__name__)
 CORS(app)
 
 CSV_FILE = "shopback_offers.csv"
+
+# Ensure Playwright Chromium is installed at runtime (safe, but usually done during build)
+def ensure_playwright_browser():
+    try:
+        subprocess.run(["playwright", "install", "chromium"], check=True)
+        print("✅ Playwright Chromium installed or already available")
+    except Exception as e:
+        print(f"⚠️ Failed to install Playwright browser: {e}")
 
 # Background scraper task
 async def scrape_shopback():
@@ -79,12 +89,18 @@ def scrape_now():
 def home():
     return "✅ Offers Hub backend is running. Visit /offers to see data."
 
+# Background initial scrape (non-blocking)
+def initial_scrape_background():
+    try:
+        asyncio.run(scrape_shopback())
+    except Exception as e:
+        print(f"⚠️ Initial scrape failed: {e}")
+
 if __name__ == "__main__":
-    # Optional: initial scrape at startup
+    ensure_playwright_browser()
+
+    # Start initial scrape in background thread if CSV doesn't exist
     if not os.path.exists(CSV_FILE):
-        try:
-            asyncio.run(scrape_shopback())
-        except Exception as e:
-            print(f"⚠️ Initial scrape failed: {e}")
+        threading.Thread(target=initial_scrape_background, daemon=True).start()
 
     app.run(debug=True, host="0.0.0.0", port=5000)
