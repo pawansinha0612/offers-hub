@@ -58,7 +58,6 @@ async def scrape_shopback():
         await browser.close()
         print(f"✅ Scraped {len(scraped)} offers into {CSV_FILE}")
 
-
 @app.route("/offers")
 def offers():
     data = []
