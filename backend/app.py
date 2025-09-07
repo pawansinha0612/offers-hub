@@ -26,10 +26,18 @@ if not DATABASE_URL:
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# SQLite-specific args
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+# --- SQLAlchemy Engine ---
+if DATABASE_URL.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+else:
+    connect_args = {"sslmode": "require"}  # SSL for Postgres
 
-engine = create_engine(DATABASE_URL, connect_args=connect_args, future=True)
+engine = create_engine(
+    DATABASE_URL,
+    connect_args=connect_args,
+    pool_pre_ping=True,  # prevent SSL errors on stale connections
+    future=True
+)
 metadata = MetaData()
 
 # --- Table definition ---
