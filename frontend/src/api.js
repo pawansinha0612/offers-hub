@@ -7,3 +7,4 @@ export async function fetchOffers() {
     if (!res.ok) throw new Error("Failed to fetch offers");
     return res.json(); // Returns array of offers: { store, cashback, link, scraped_at }
 }
+
