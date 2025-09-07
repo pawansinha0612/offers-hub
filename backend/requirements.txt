@@ -1,5 +1,19 @@
-greenlet>=3.0.3
-gevent>=22.10.2
+# Core
 Flask==2.3.2
 Flask-Cors==3.0.10
+SQLAlchemy==1.4.46
+psycopg2-binary==2.9.6
+requests==2.32.0
+
+# Playwright
 playwright==1.43.0
+
+# Async / threading support
+greenlet>=3.0.3
+gevent>=22.10.2
+
+# Production server
+gunicorn==21.2.0
+
+# Scheduler
+APScheduler==3.10.4

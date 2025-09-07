@@ -1,170 +1,243 @@
-Absolutely ✅ — a **README.md** is perfect for documenting everything so future-you (or collaborators) know how the system works.
-Here’s a complete one tailored for your **Offers-Hub** project:
+---
+
+# Offers Hub
+
+A web service to fetch, store, and serve cashback offers from ShopBack Australia.
+This project uses **Flask + Playwright + SQLAlchemy** for the backend, stores offers in a **database** (SQLite locally / Postgres in the cloud), and serves data to a React frontend.
 
 ---
 
-# 📊 Offers-Hub
+## Features
 
-Offers-Hub is a full-stack project that scrapes cashback/offer data from **ShopBack** (and will expand to other sources later), saves it into a CSV, and serves it via a **Flask backend**.
-The data is displayed in a **React dashboard frontend**, deployed for free using **Render (backend)** and **Vercel (frontend)**.
+* Scrapes ShopBack Australia for store cashback offers.
+* Stores offers in **SQLite (local)** or **Postgres (cloud)**.
+* REST API endpoints:
 
----
-
-## 🚀 Project Structure
-
-```
-offers-hub/
-│
-├─ backend/
-│   ├─ sources/
-│   │   └─ shopback/
-│   │       ├─ scraper.py         # ShopBack scraper logic
-│   │       └─ shopback_offers.csv # Generated offers CSV
-│   ├─ app.py                     # Flask API
-│   ├─ requirements.txt           # Python dependencies
-│   └─ Procfile                   # Deployment config for Render
-│
-└─ frontend/
-    ├─ src/
-    │   ├─ App.js                 # React main app (dashboard)
-    │   ├─ api.js                 # API calls to backend
-    │   ├─ components/            # Reusable UI components
-    │   └─ index.js
-    ├─ public/index.html          # React entry point
-    └─ package.json               # Node.js dependencies
-```
+    * `/offers` — Returns all stored offers as JSON.
+    * `/scrape-now` — Triggers a manual background scrape.
+* Automatic scraping **every 6 hours** using APScheduler.
+* Free Render instances are kept alive by self-pinging `/offers` every 5 minutes.
+* React frontend fetches live offers and displays in a table.
 
 ---
 
-## 🛠️ Backend (Flask + Playwright)
+## Backend Setup
 
-### Run locally
+### Requirements
+
+* Python 3.10+
+* Node.js / npm (for frontend)
+* PostgreSQL (if using cloud database)
+* Render or similar hosting for deployment
+
+### Install dependencies
 
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate   # on Mac/Linux
-# or .venv\Scripts\activate # on Windows
-
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-python app.py
+playwright install chromium
 ```
 
-* Backend runs on → `http://127.0.0.1:5000`
-* Endpoints:
+### Environment Variables
 
-    * `/` → Health check
-    * `/offers` → Returns offers JSON (from CSV)
-    * `/scrape-now` → Runs scraper, updates CSV
+Set the database URL:
 
-### How it works
+```bash
+export DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"
+```
 
-* `app.py` starts Flask API
-* On startup → ensures **Playwright Chromium** is installed
-* Reads from `shopback_offers.csv`
-* `/scrape-now` can be triggered manually to refresh data
+If not provided, the backend will use a local SQLite file: `offers.db`.
 
 ---
 
-## 🎨 Frontend (React)
+## Run Locally
 
-### Run locally
+```bash
+cd backend
+source .venv/bin/activate
+python app.py
+```
+
+* Visit `http://127.0.0.1:5000/offers` to see the offers.
+* Visit `http://127.0.0.1:5000/scrape-now` to trigger a manual scrape.
+
+---
+
+## Frontend Setup (React)
+
+1. Install dependencies:
 
 ```bash
 cd frontend
 npm install
+```
+
+2. Update API URL in `frontend/src/api.js`:
+
+```js
+export async function fetchOffers() {
+  const res = await fetch("https://your-backend.onrender.com/offers");
+  if (!res.ok) throw new Error("Failed");
+  return res.json();
+}
+```
+
+3. Run locally:
+
+```bash
 npm start
 ```
 
-* Frontend runs on → `http://localhost:3000`
-* Fetches data from backend `/offers`
-* Lets you **filter offers by category** (dynamic dropdown)
-* Displays table: Store | Cashback (%) | Link
+---
+
+## Deploy on Render
+
+1️⃣ **Create Web Service**
+
+* Go to Render Dashboard → New → Web Service
+* Connect your GitHub repo (`offers-hub`)
+
+2️⃣ **Set Environment Variables**
+
+* `DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"`
+
+3️⃣ **Configure Build Command**
+
+```bash
+pip install --upgrade pip setuptools wheel && pip install -r backend/requirements.txt && playwright install chromium
+```
+
+4️⃣ **Configure Start Command**
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
+```
+
+5️⃣ **Deploy**
+
+* Render installs dependencies, Playwright, and starts the backend.
+
+6️⃣ **Scheduler & Keep-alive**
+
+* APScheduler in `app.py` scrapes every 6 hours automatically.
+* `/offers` endpoint is self-pinged every 5 minutes to prevent free instance shutdown.
 
 ---
 
-## 🔗 Connectivity
+## API Endpoints
 
-* **Frontend** (`Vercel`) → calls **Backend API** (`Render`)
-* Local dev:
+| Endpoint      | Method | Description                            |
+| ------------- | ------ | -------------------------------------- |
+| `/offers`     | GET    | Returns all offers from the database.  |
+| `/scrape-now` | GET    | Triggers a background scrape manually. |
+| `/`           | GET    | Health check / info endpoint.          |
 
-    * React → `http://127.0.0.1:5000/offers`
-* Production:
+### Response Fields
 
-    * React → `https://offers-hub.onrender.com/offers`
-
-So, the frontend always calls backend for data.
-The backend either serves CSV or scrapes + updates it.
-
----
-
-## ☁️ Deployment
-
-### Backend (Render)
-
-1. Push `backend/` folder to GitHub
-2. On Render:
-
-    * Create **Web Service**
-    * Build command:
-
-      ```
-      pip install -r backend/requirements.txt && playwright install
-      ```
-    * Start command:
-
-      ```
-      python backend/app.py
-      ```
-3. Render URL: `https://offers-hub.onrender.com`
-
-### Frontend (Vercel)
-
-1. Push `frontend/` folder to GitHub
-2. In Vercel:
-
-    * Link repo → select `frontend` folder
-    * Framework: Create React App
-    * Build command: `npm run build`
-    * Output: `build`
-3. Vercel URL: `https://offers-hub-frontend.vercel.app`
+* `store` — Store name
+* `cashback` — Cashback percentage
+* `link` — Offer URL
+* `scraped_at` — Timestamp when scraped
 
 ---
 
-## ✅ How to Test
+## Architecture Diagram
 
-* Local backend:
-
-    * Visit [http://127.0.0.1:5000/offers](http://127.0.0.1:5000/offers)
-* Local frontend:
-
-    * Visit [http://localhost:3000](http://localhost:3000)
-* Production test:
-
-    * Backend: [https://offers-hub.onrender.com/offers](https://offers-hub.onrender.com/offers)
-    * Frontend: [https://offers-hub-frontend.vercel.app](https://offers-hub-frontend.vercel.app)
-
----
-
-## 📌 Each Component
-
-* **scraper.py** → Extracts ShopBack data, saves CSV
-* **app.py** → Flask API serving data to frontend
-* **requirements.txt** → Dependencies (Flask, Flask-Cors, Playwright)
-* **Procfile** → Tells Render how to run backend
-* **App.js (frontend)** → UI for filtering + displaying offers
-* **api.js** → Makes API calls from React to Flask
-* **index.html** → Root template for React build
+```
++-----------------+       +-------------------+       +------------------+
+|   User / React  | <---> |    Render Backend | <---> |   Database (DB)  |
+|   Frontend      |       | Flask + APScheduler|       | SQLite / Postgres|
++-----------------+       +-------------------+       +------------------+
+       ^                         ^
+       |                         |
+       |                         +-- Background scraping every 6 hours
+       |                         +-- Self-ping /offers every 5 min
+       |
+       +-- Fetch offers from /offers endpoint
+```
 
 ---
 
-## 🔮 Next Steps
+## CSV Import (Optional)
 
-* Add more scrapers in `backend/sources/`
-* Automate scraping with CRON jobs (Render + GitHub Actions)
-* Expand filters and UI in frontend
-* Save offers in DB (SQLite / Postgres) instead of CSV
+If you have an existing `shopback_offers.csv`:
+
+```bash
+python import_csv.py
+```
+
+This script will load CSV data into the configured database.
 
 ---
 
-👉 This README covers **local setup, testing, deployment, and connectivity**.
+## Notes
+
+* Free Render instances can **spin down** with inactivity; self-ping keeps it alive.
+* APScheduler ensures **automated scraping** every 6 hours.
+* Backend stores data in a database to **prevent memory issues**.
+
+---
+Absolutely — I’ve got it. We’ll include that you already have `import_csv_to_db.py` in the workflow, so it’s clear it’s pre-existing and part of the pipeline. Here’s a clear diagram and explanation for your README:
+
+---
+
+### **Offers Hub Data Flow**
+
+```text
++------------------+        +------------------+        +------------------+
+|   CSV File       |  --->  |  import_csv_to_db|  --->  |    Database      |
+| shopback_offers.csv |      |  (pre-existing) |        | (SQLite / Postgres)|
++------------------+        +------------------+        +------------------+
+                                      ^
+                                      |
+                                      |
+                             +------------------+
+                             |  Scraper / API   |
+                             | /scrape-now or   |
+                             | Scheduled Job    |
+                             +------------------+
+                                      |
+                                      v
+                             +------------------+
+                             |   Frontend App   |
+                             |  React / Fetch   |
+                             |   /offers        |
+                             +------------------+
+```
+
+---
+
+### **Explanation**
+
+1. **CSV Import (Pre-existing)**
+
+    * Script: `backend/import_csv_to_db.py`
+    * Reads `shopback_offers.csv`.
+    * Inserts rows into the database (clears previous offers first).
+
+2. **Database**
+
+    * Can be **SQLite** (local) or **Postgres** (cloud, via `DATABASE_URL`).
+    * Holds the current set of offers.
+    * All updates happen here — scraper overwrites old entries.
+
+3. **Scraper**
+
+    * Endpoint: `/scrape-now`
+    * Scheduled every 6 hours via APScheduler in `app.py`.
+    * Fetches live ShopBack data, updates DB.
+
+4. **Frontend**
+
+    * Fetches offers from `/offers`.
+    * React table columns: `store`, `cashback`, `link`, `scraped_at`.
+
+5. **Idle Keep-Alive (Optional)**
+
+    * Scheduled fetch every 5 minutes to `/offers` keeps Render instance alive.
+
+---
+=

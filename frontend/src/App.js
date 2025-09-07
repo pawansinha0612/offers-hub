@@ -1,41 +1,46 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchOffers } from "./api";
 
-function App() {
+function OffersTable() {
     const [offers, setOffers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchOffers()
-            .then(data => setOffers(data))
-            .catch(err => console.error("Failed to fetch offers:", err));
+            .then(data => {
+                setOffers(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
     }, []);
 
-    return (
-        <div style={{ padding: "20px" }}>
-            <h1>Offers-Hub Dashboard</h1>
+    if (loading) return <div>Loading offers...</div>;
 
-            <table border="1" cellPadding="10" style={{ marginTop: "20px" }}>
-                <thead>
-                <tr>
-                    <th>Store</th>
-                    <th>Cashback (%)</th>
-                    <th>Link</th>
+    return (
+        <table>
+            <thead>
+            <tr>
+                <th>Store</th>
+                <th>Cashback (%)</th>
+                <th>Link</th>
+                <th>Scraped At</th>
+            </tr>
+            </thead>
+            <tbody>
+            {offers.map((offer, idx) => (
+                <tr key={idx}>
+                    <td>{offer.store}</td>
+                    <td>{offer.cashback}</td>
+                    <td><a href={offer.link} target="_blank" rel="noopener noreferrer">Visit</a></td>
+                    <td>{offer.scraped_at}</td>
                 </tr>
-                </thead>
-                <tbody>
-                {offers.map((offer, idx) => (
-                    <tr key={idx}>
-                        <td>{offer.Store}</td>
-                        <td>{offer["Cashback (%)"]}</td>
-                        <td>
-                            <a href={offer.Link} target="_blank" rel="noreferrer">Visit</a>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
+            ))}
+            </tbody>
+        </table>
     );
 }
 
-export default App;
+export default OffersTable;
