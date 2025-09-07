@@ -9,26 +9,24 @@ import requests
 
 from flask import Flask, jsonify
 from flask_cors import CORS
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Text, DateTime, func, select
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Text, DateTime, func, select, text
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
 
-# Python version log
+# --- Python version log ---
 print("Python version:", sys.version)
 
 # --- Config ---
-DATABASE_URL = os.environ.get("DATABASE_URL")  # Postgres (Supabase) or SQLite fallback
+DATABASE_URL = os.environ.get("DATABASE_URL")
 if not DATABASE_URL:
     DATABASE_URL = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'offers.db')}"
 
-# --- SQLAlchemy setup ---
-connect_args = {}
-if DATABASE_URL.startswith("sqlite"):
-    connect_args = {"check_same_thread": False}
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
 engine = create_engine(DATABASE_URL, connect_args=connect_args, future=True)
 metadata = MetaData()
 
+# --- Table definition ---
 offers_table = Table(
     "offers",
     metadata,
@@ -71,11 +69,14 @@ def load_offers():
 # --- Scraper ---
 async def scrape_shopback_internal():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"])
+        browser = await p.chromium.launch(
+            headless=True,
+            args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-setuid-sandbox"]
+        )
         page = await browser.new_page()
-        await page.goto("https://www.shopback.com.au/all-stores", timeout=60000)
+        await page.goto("https://www.shopback.com.au/all-stores", timeout=90000)
 
-        # gentle scrolling
+        # Gentle scrolling
         for _ in range(5):
             await page.mouse.wheel(0, 3000)
             await page.wait_for_timeout(1500)
@@ -91,7 +92,6 @@ async def scrape_shopback_internal():
                 "cashback": cashback.strip() if cashback else "N/A",
                 "link": link.strip() if link else "N/A"
             })
-
         await browser.close()
         return scraped
 
@@ -127,17 +127,17 @@ def initial_scrape_background():
     except Exception as e:
         print("Initial scrape error:", e)
 
-# --- Scheduler: scrape every 6 hours ---
+# --- Scheduler ---
+scheduler = BackgroundScheduler()
+
 def scheduled_scrape():
     print(f"{datetime.now()}: Scheduled scrape starting...")
     run_scrape_and_save_sync()
 
-scheduler = BackgroundScheduler()
 scheduler.add_job(func=scheduled_scrape, trigger="interval", hours=6)
 
-# --- Keep-alive ping every 5 minutes ---
 def keep_alive_ping():
-    backend_url = os.environ.get("BACKEND_URL")  # e.g., https://your-backend.onrender.com
+    backend_url = os.environ.get("BACKEND_URL")
     if not backend_url:
         return
     try:
@@ -152,5 +152,14 @@ atexit.register(lambda: scheduler.shutdown())
 
 # --- Main ---
 if __name__ == "__main__":
-    threading.Thread(target=initial_scrape_background, daemon=True).start()
+    # Test DB connection first
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        print("✅ Database connection successful")
+        threading.Thread(target=initial_scrape_background, daemon=True).start()
+    except Exception as e:
+        print("❌ Database connection failed:", e)
+        print("⚠️ Skipping initial scrape until DB is reachable")
+
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
