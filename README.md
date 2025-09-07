@@ -2,8 +2,8 @@
 
 # Offers Hub
 
-A web service to fetch, store, and serve cashback offers from ShopBack Australia.
-This project uses **Flask + Playwright + SQLAlchemy** for the backend, stores offers in a **database** (SQLite locally / Postgres in the cloud), and serves data to a React frontend.
+A web service to fetch, store, and serve cashback offers from **ShopBack Australia**.
+This project uses **Flask + Playwright + SQLAlchemy** for the backend, stores offers in a **database** (SQLite locally / Postgres in the cloud), and serves data to a **React frontend**.
 
 ---
 
@@ -13,65 +13,70 @@ This project uses **Flask + Playwright + SQLAlchemy** for the backend, stores of
 * Stores offers in **SQLite (local)** or **Postgres (cloud)**.
 * REST API endpoints:
 
-    * `/offers` — Returns all stored offers as JSON.
-    * `/scrape-now` — Triggers a manual background scrape.
+   * `/offers` — Returns all stored offers as JSON.
+   * `/scrape-now` — Triggers a manual background scrape.
+   * `/` — Health check endpoint.
 * Automatic scraping **every 6 hours** using APScheduler.
 * Free Render instances are kept alive by self-pinging `/offers` every 5 minutes.
-* React frontend fetches live offers and displays in a table.
+* React frontend fetches live offers and displays them in a table.
+* Optional CSV import for pre-existing offers.
 
 ---
 
-## Backend Setup
+## First-Time Setup
 
-### Requirements
+### Backend (Python + Flask)
 
-* Python 3.10+
-* Node.js / npm (for frontend)
-* PostgreSQL (if using cloud database)
-* Render or similar hosting for deployment
-
-### Install dependencies
+1. Clone the repository:
 
 ```bash
-cd backend
+git clone https://github.com/<your-username>/offers-hub.git
+cd offers-hub/backend
+```
+
+2. Create a virtual environment and activate it:
+
+```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # Linux/macOS
+.venv\Scripts\activate     # Windows
+```
+
+3. Install dependencies:
+
+```bash
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 playwright install chromium
 ```
 
-### Environment Variables
-
-Set the database URL:
+4. Set environment variable for database:
 
 ```bash
 export DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"
 ```
 
-If not provided, the backend will use a local SQLite file: `offers.db`.
+If not provided, the backend will default to `SQLite` file `offers.db`.
 
----
-
-## Run Locally
+5. Run backend locally:
 
 ```bash
-cd backend
-source .venv/bin/activate
 python app.py
 ```
 
-* Visit `http://127.0.0.1:5000/offers` to see the offers.
-* Visit `http://127.0.0.1:5000/scrape-now` to trigger a manual scrape.
+Visit:
+
+* `http://127.0.0.1:5000/offers` → View offers
+* `http://127.0.0.1:5000/scrape-now` → Trigger manual scrape
 
 ---
 
-## Frontend Setup (React)
+### Frontend (React)
 
-1. Install dependencies:
+1. Go to frontend directory:
 
 ```bash
-cd frontend
+cd ../frontend
 npm install
 ```
 
@@ -79,13 +84,13 @@ npm install
 
 ```js
 export async function fetchOffers() {
-  const res = await fetch("https://your-backend.onrender.com/offers");
+  const res = await fetch("http://127.0.0.1:5000/offers");
   if (!res.ok) throw new Error("Failed");
   return res.json();
 }
 ```
 
-3. Run locally:
+3. Run frontend locally:
 
 ```bash
 npm start
@@ -93,37 +98,14 @@ npm start
 
 ---
 
-## Deploy on Render
+### Optional: CSV Import
 
-1️⃣ **Create Web Service**
-
-* Go to Render Dashboard → New → Web Service
-* Connect your GitHub repo (`offers-hub`)
-
-2️⃣ **Set Environment Variables**
-
-* `DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"`
-
-3️⃣ **Configure Build Command**
+If you have an existing CSV file `shopback_offers.csv`, you can import it to the database:
 
 ```bash
-pip install --upgrade pip setuptools wheel && pip install -r backend/requirements.txt && playwright install chromium
+cd backend
+python import_csv_to_db.py
 ```
-
-4️⃣ **Configure Start Command**
-
-```bash
-gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
-```
-
-5️⃣ **Deploy**
-
-* Render installs dependencies, Playwright, and starts the backend.
-
-6️⃣ **Scheduler & Keep-alive**
-
-* APScheduler in `app.py` scrapes every 6 hours automatically.
-* `/offers` endpoint is self-pinged every 5 minutes to prevent free instance shutdown.
 
 ---
 
@@ -146,7 +128,7 @@ gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
 
 ## Architecture Diagram
 
-```
+```text
 +-----------------+       +-------------------+       +------------------+
 |   User / React  | <---> |    Render Backend | <---> |   Database (DB)  |
 |   Frontend      |       | Flask + APScheduler|       | SQLite / Postgres|
@@ -161,30 +143,7 @@ gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
 
 ---
 
-## CSV Import (Optional)
-
-If you have an existing `shopback_offers.csv`:
-
-```bash
-python import_csv.py
-```
-
-This script will load CSV data into the configured database.
-
----
-
-## Notes
-
-* Free Render instances can **spin down** with inactivity; self-ping keeps it alive.
-* APScheduler ensures **automated scraping** every 6 hours.
-* Backend stores data in a database to **prevent memory issues**.
-
----
-Absolutely — I’ve got it. We’ll include that you already have `import_csv_to_db.py` in the workflow, so it’s clear it’s pre-existing and part of the pipeline. Here’s a clear diagram and explanation for your README:
-
----
-
-### **Offers Hub Data Flow**
+## Offers Hub Data Flow
 
 ```text
 +------------------+        +------------------+        +------------------+
@@ -210,34 +169,66 @@ Absolutely — I’ve got it. We’ll include that you already have `import_csv_
 
 ---
 
-### **Explanation**
+## Deployment on Render
 
-1. **CSV Import (Pre-existing)**
+### Step 1: PostgreSQL Database
 
-    * Script: `backend/import_csv_to_db.py`
-    * Reads `shopback_offers.csv`.
-    * Inserts rows into the database (clears previous offers first).
+* Render → New → PostgreSQL Database
+* Copy connection string for `DATABASE_URL`
+  Example:
 
-2. **Database**
+  ```
+  postgresql://user:password@host:5432/offers_db?sslmode=require
+  ```
 
-    * Can be **SQLite** (local) or **Postgres** (cloud, via `DATABASE_URL`).
-    * Holds the current set of offers.
-    * All updates happen here — scraper overwrites old entries.
+### Step 2: Web Service
 
-3. **Scraper**
+1. Render → New → Web Service → Connect GitHub repo
 
-    * Endpoint: `/scrape-now`
-    * Scheduled every 6 hours via APScheduler in `app.py`.
-    * Fetches live ShopBack data, updates DB.
+   * Root directory: `backend`
+   * Environment Variable: `DATABASE_URL=<your-db-url>`
 
-4. **Frontend**
+2. Build command:
 
-    * Fetches offers from `/offers`.
-    * React table columns: `store`, `cashback`, `link`, `scraped_at`.
+```bash
+pip install --upgrade pip setuptools wheel && pip install -r requirements.txt && playwright install chromium
+```
 
-5. **Idle Keep-Alive (Optional)**
+3. Start command:
 
-    * Scheduled fetch every 5 minutes to `/offers` keeps Render instance alive.
+```bash
+gunicorn -w 4 -b 0.0.0.0:$PORT app:app
+```
+
+4. Deploy. Your API will be live at `https://<your-service>.onrender.com/offers`.
 
 ---
-=
+
+## Scheduler & Keep-Alive
+
+* **APScheduler** automatically scrapes every 6 hours.
+* `/offers` endpoint is pinged every 5 minutes to keep free Render instances awake.
+
+---
+
+## Notes
+
+* Database stores offers persistently — no memory-only storage.
+* Supports **SQLite** for local dev and **Postgres** for cloud.
+* CSV import is optional but useful for initializing the database.
+* Free Render instances may spin down if idle — keep-alive ping prevents this.
+
+---
+
+This README is **fully complete**, including:
+
+* Backend setup, frontend setup
+* Environment variables
+* API endpoints
+* CSV import
+* Deployment on Render
+* Architecture diagram
+* Data flow diagram
+* Scheduler & keep-alive notes
+
+---
