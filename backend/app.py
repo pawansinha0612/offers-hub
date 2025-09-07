@@ -18,20 +18,17 @@ print("Python version:", sys.version)
 
 # --- Config ---
 DATABASE_URL = os.environ.get("DATABASE_URL")
-if DATABASE_URL:
-    # Ensure SQLAlchemy uses the correct PostgreSQL dialect
-    if DATABASE_URL.startswith("postgres://"):
-        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-else:
+if not DATABASE_URL:
+    # fallback to SQLite if no DB is configured
     DATABASE_URL = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'offers.db')}"
 
-# SQLite-specific connect_args
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
-# PostgreSQL-specific connect_args
-if DATABASE_URL.startswith("postgresql"):
-    connect_args["sslmode"] = "require"
+# Fix scheme if Render gives postgres:// instead of postgresql://
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# --- SQLAlchemy engine ---
+# SQLite-specific args
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+
 engine = create_engine(DATABASE_URL, connect_args=connect_args, future=True)
 metadata = MetaData()
 
@@ -161,7 +158,6 @@ atexit.register(lambda: scheduler.shutdown())
 
 # --- Main ---
 if __name__ == "__main__":
-    # Test DB connection first
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
