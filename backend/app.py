@@ -31,6 +31,7 @@ connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite")
 if DATABASE_URL.startswith("postgresql"):
     connect_args["sslmode"] = "require"
 
+# --- SQLAlchemy engine ---
 engine = create_engine(DATABASE_URL, connect_args=connect_args, future=True)
 metadata = MetaData()
 
