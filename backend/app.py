@@ -13,6 +13,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
 
+# --- Python version log ---
 print("Python version:", sys.version)
 
 # --- Config ---
@@ -24,11 +25,7 @@ if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 # --- SQLAlchemy Engine ---
-if DATABASE_URL.startswith("sqlite"):
-    connect_args = {"check_same_thread": False}
-else:
-    connect_args = {"sslmode": "require"}
-
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {"sslmode": "require"}
 engine = create_engine(DATABASE_URL, connect_args=connect_args, pool_pre_ping=True, future=True)
 metadata = MetaData()
 
@@ -52,15 +49,17 @@ CORS(app)
 # --- DB helpers ---
 def save_offers(offers_list):
     """Insert new offers or update existing ones based on store name."""
+    if not offers_list:
+        return
     with engine.begin() as conn:
         for offer in offers_list:
             stmt = text("""
                 INSERT INTO offers (store, cashback, link, scraped_at)
-                VALUES (:store, :cashback, :link, NOW())
+                VALUES (:store, :cashback, :link, CURRENT_TIMESTAMP)
                 ON CONFLICT (store) DO UPDATE
                 SET cashback = EXCLUDED.cashback,
                     link = EXCLUDED.link,
-                    scraped_at = NOW()
+                    scraped_at = CURRENT_TIMESTAMP
             """)
             conn.execute(stmt, offer)
 
@@ -73,16 +72,15 @@ def load_offers():
             offers_table.c.scraped_at
         ).order_by(offers_table.c.store.asc())
         rows = conn.execute(stmt).fetchall()
-    result = []
-    for r in rows:
-        scraped_at = r.scraped_at.isoformat() if r.scraped_at else None
-        result.append({
+    return [
+        {
             "store": r.store,
             "cashback": r.cashback,
             "link": r.link,
-            "scraped_at": scraped_at
-        })
-    return result
+            "scraped_at": r.scraped_at.isoformat() if r.scraped_at else None
+        }
+        for r in rows
+    ]
 
 # --- Scraper ---
 async def scrape_shopback_internal():
@@ -94,32 +92,34 @@ async def scrape_shopback_internal():
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=180000)
 
-        # Infinite scroll until no new offers appear
-        prev_count = 0
-        while True:
-            await page.mouse.wheel(0, 5000)
-            await page.wait_for_timeout(2000)
-            cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-            if len(cards) == prev_count:
-                break
-            prev_count = len(cards)
+        unique_offers = {}
+        last_count = 0
 
-        # Collect unique offers
-        unique = {}
-        for card in cards:
-            name = await card.get_attribute("data-merchant-name")
-            cashback = await card.get_attribute("data-max-cashback-rate")
-            link = await card.get_attribute("data-feature-destination-url")
-            if name:
-                key = name.strip().lower()
-                unique[key] = {
-                    "store": name.strip(),
-                    "cashback": cashback.strip() if cashback else "N/A",
-                    "link": link.strip() if link else "N/A"
-                }
+        while True:
+            # Scroll down
+            await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
+            await page.wait_for_timeout(2000)  # wait for new cards to load
+
+            cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
+            for card in cards:
+                name = await card.get_attribute("data-merchant-name")
+                cashback = await card.get_attribute("data-max-cashback-rate")
+                link = await card.get_attribute("data-feature-destination-url")
+                if name:
+                    key = name.strip().lower()
+                    unique_offers[key] = {
+                        "store": name.strip(),
+                        "cashback": cashback.strip() if cashback else "N/A",
+                        "link": link.strip() if link else "N/A"
+                    }
+
+            # Stop if no new offers added
+            if len(unique_offers) == last_count:
+                break
+            last_count = len(unique_offers)
 
         await browser.close()
-        return list(unique.values())
+        return list(unique_offers.values())
 
 def run_scrape_and_save_sync():
     try:
@@ -146,12 +146,9 @@ def home():
 
 # --- Background initial scrape ---
 def initial_scrape_background():
-    try:
-        if not load_offers():
-            print("DB empty — starting background initial scrape")
-            run_scrape_and_save_sync()
-    except Exception as e:
-        print("Initial scrape error:", e)
+    if not load_offers():
+        print("DB empty — starting initial background scrape")
+        run_scrape_and_save_sync()
 
 # --- Scheduler ---
 scheduler = BackgroundScheduler()
@@ -187,7 +184,6 @@ if __name__ == "__main__":
         print("❌ Database connection failed:", e)
         print("⚠️ Skipping initial scrape until DB is reachable")
 
-    # Render-ready port binding
     port = int(os.environ.get("PORT", 5000))
-    print(f"Starting Flask on 0.0.0.0:{port}")
+    print(f"🚀 Starting Flask server on 0.0.0.0:{port}")
     app.run(debug=True, host="0.0.0.0", port=port)
