@@ -35,7 +35,7 @@ else:
 engine = create_engine(
     DATABASE_URL,
     connect_args=connect_args,
-    pool_pre_ping=True,  # prevent SSL errors on stale connections
+    pool_pre_ping=True,
     future=True
 )
 metadata = MetaData()
@@ -45,10 +45,10 @@ offers_table = Table(
     "offers",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("store", String(255)),
+    Column("store", String(255), unique=True, index=True),  # unique store name
     Column("cashback", String(50)),
     Column("link", Text),
-    Column("scraped_at", DateTime, server_default=func.now()),
+    Column("scraped_at", DateTime, server_default=func.now(), onupdate=func.now()),
 )
 
 metadata.create_all(engine)
@@ -59,11 +59,18 @@ CORS(app)
 
 # --- DB helpers ---
 def save_offers(offers_list):
+    """Insert new offers or update existing ones based on store name."""
     with engine.begin() as conn:
-        conn.execute(offers_table.delete())
-        if offers_list:
-            rows = [{"store": o["store"], "cashback": o["cashback"], "link": o["link"]} for o in offers_list]
-            conn.execute(offers_table.insert(), rows)
+        for offer in offers_list:
+            stmt = text("""
+                INSERT INTO offers (store, cashback, link, scraped_at)
+                VALUES (:store, :cashback, :link, NOW())
+                ON CONFLICT (store) DO UPDATE
+                SET cashback = EXCLUDED.cashback,
+                    link = EXCLUDED.link,
+                    scraped_at = NOW()
+            """)
+            conn.execute(stmt, offer)
 
 def load_offers():
     with engine.connect() as conn:
@@ -72,12 +79,17 @@ def load_offers():
             offers_table.c.cashback,
             offers_table.c.link,
             offers_table.c.scraped_at
-        ).order_by(offers_table.c.id)
+        ).order_by(offers_table.c.store.asc())
         rows = conn.execute(stmt).fetchall()
     result = []
     for r in rows:
         scraped_at = r.scraped_at.isoformat() if r.scraped_at else None
-        result.append({"store": r.store, "cashback": r.cashback, "link": r.link, "scraped_at": scraped_at})
+        result.append({
+            "store": r.store,
+            "cashback": r.cashback,
+            "link": r.link,
+            "scraped_at": scraped_at
+        })
     return result
 
 # --- Scraper ---
@@ -88,32 +100,40 @@ async def scrape_shopback_internal():
             args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-setuid-sandbox"]
         )
         page = await browser.new_page()
-        await page.goto("https://www.shopback.com.au/all-stores", timeout=90000)
+        await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
-        # Gentle scrolling
-        for _ in range(5):
-            await page.mouse.wheel(0, 3000)
-            await page.wait_for_timeout(1500)
+        # Keep scrolling until no new offers are loaded
+        prev_count = 0
+        while True:
+            await page.mouse.wheel(0, 5000)
+            await page.wait_for_timeout(2000)
+            cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
+            if len(cards) == prev_count:
+                break
+            prev_count = len(cards)
 
-        cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-        scraped = []
+        # Collect unique offers
+        unique = {}
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
             cashback = await card.get_attribute("data-max-cashback-rate")
             link = await card.get_attribute("data-feature-destination-url")
-            scraped.append({
-                "store": name.strip() if name else "N/A",
-                "cashback": cashback.strip() if cashback else "N/A",
-                "link": link.strip() if link else "N/A"
-            })
+            if name:
+                key = name.strip().lower()
+                unique[key] = {
+                    "store": name.strip(),
+                    "cashback": cashback.strip() if cashback else "N/A",
+                    "link": link.strip() if link else "N/A"
+                }
+
         await browser.close()
-        return scraped
+        return list(unique.values())
 
 def run_scrape_and_save_sync():
     try:
         offers = asyncio.run(scrape_shopback_internal())
         save_offers(offers)
-        print(f"✅ Scraped {len(offers)} offers and saved to DB")
+        print(f"✅ Scraped {len(offers)} unique offers and saved to DB")
     except Exception as e:
         print("❌ Scrape failed:", e)
 
