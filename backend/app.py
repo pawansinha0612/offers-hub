@@ -13,16 +13,13 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
 
-# --- Python version log ---
 print("Python version:", sys.version)
 
 # --- Config ---
 DATABASE_URL = os.environ.get("DATABASE_URL")
 if not DATABASE_URL:
-    # fallback to SQLite if no DB is configured
     DATABASE_URL = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'offers.db')}"
 
-# Fix scheme if Render gives postgres:// instead of postgresql://
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
@@ -30,14 +27,9 @@ if DATABASE_URL.startswith("postgres://"):
 if DATABASE_URL.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
 else:
-    connect_args = {"sslmode": "require"}  # SSL for Postgres
+    connect_args = {"sslmode": "require"}
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args=connect_args,
-    pool_pre_ping=True,
-    future=True
-)
+engine = create_engine(DATABASE_URL, connect_args=connect_args, pool_pre_ping=True, future=True)
 metadata = MetaData()
 
 # --- Table definition ---
@@ -45,7 +37,7 @@ offers_table = Table(
     "offers",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("store", String(255), unique=True, index=True),  # unique store name
+    Column("store", String(255), unique=True, index=True),
     Column("cashback", String(50)),
     Column("link", Text),
     Column("scraped_at", DateTime, server_default=func.now(), onupdate=func.now()),
@@ -100,34 +92,17 @@ async def scrape_shopback_internal():
             args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-setuid-sandbox"]
         )
         page = await browser.new_page()
-        await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
+        await page.goto("https://www.shopback.com.au/all-stores", timeout=180000)
 
-        # --- Infinite scroll properly ---
+        # Infinite scroll until no new offers appear
         prev_count = 0
-        no_change_scrolls = 0
-        max_no_change_scrolls = 3  # stop if no new cards for 3 scrolls
-        timeout_seconds = 90
-        start_time = datetime.now()
-
         while True:
-            await page.mouse.wheel(0, 3000)
-            await page.wait_for_timeout(1500)
+            await page.mouse.wheel(0, 5000)
+            await page.wait_for_timeout(2000)
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-            current_count = len(cards)
-
-            if current_count == prev_count:
-                no_change_scrolls += 1
-            else:
-                no_change_scrolls = 0
-                prev_count = current_count
-
-            if no_change_scrolls >= max_no_change_scrolls:
+            if len(cards) == prev_count:
                 break
-
-            # safety timeout
-            if (datetime.now() - start_time).total_seconds() > timeout_seconds:
-                print("⏱ Scroll timeout reached")
-                break
+            prev_count = len(cards)
 
         # Collect unique offers
         unique = {}
@@ -212,6 +187,7 @@ if __name__ == "__main__":
         print("❌ Database connection failed:", e)
         print("⚠️ Skipping initial scrape until DB is reachable")
 
-    # Use PORT env variable provided by Render
+    # Render-ready port binding
     port = int(os.environ.get("PORT", 5000))
+    print(f"Starting Flask on 0.0.0.0:{port}")
     app.run(debug=True, host="0.0.0.0", port=port)
