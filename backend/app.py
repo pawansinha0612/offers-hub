@@ -102,18 +102,24 @@ async def scrape_shopback_internal():
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
-        # Keep scrolling until no new offers are loaded
+        unique = {}
         prev_count = 0
-        while True:
+        stable_cycles = 0
+
+        # Keep scrolling until no new offers appear for 3 cycles
+        while stable_cycles < 3:
             await page.mouse.wheel(0, 5000)
             await page.wait_for_timeout(2000)
+
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
             if len(cards) == prev_count:
-                break
-            prev_count = len(cards)
+                stable_cycles += 1
+            else:
+                stable_cycles = 0
+                prev_count = len(cards)
 
-        # Collect unique offers
-        unique = {}
+        # Collect all cards after full scroll
+        cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
             cashback = await card.get_attribute("data-max-cashback-rate")
