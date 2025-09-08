@@ -102,24 +102,35 @@ async def scrape_shopback_internal():
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
-        unique = {}
+        # --- Infinite scroll properly ---
         prev_count = 0
-        stable_cycles = 0
+        no_change_scrolls = 0
+        max_no_change_scrolls = 3  # stop if no new cards for 3 scrolls
+        timeout_seconds = 90
+        start_time = datetime.now()
 
-        # Keep scrolling until no new offers appear for 3 cycles
-        while stable_cycles < 3:
-            await page.mouse.wheel(0, 5000)
-            await page.wait_for_timeout(2000)
-
+        while True:
+            await page.mouse.wheel(0, 3000)
+            await page.wait_for_timeout(1500)
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-            if len(cards) == prev_count:
-                stable_cycles += 1
-            else:
-                stable_cycles = 0
-                prev_count = len(cards)
+            current_count = len(cards)
 
-        # Collect all cards after full scroll
-        cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
+            if current_count == prev_count:
+                no_change_scrolls += 1
+            else:
+                no_change_scrolls = 0
+                prev_count = current_count
+
+            if no_change_scrolls >= max_no_change_scrolls:
+                break
+
+            # safety timeout
+            if (datetime.now() - start_time).total_seconds() > timeout_seconds:
+                print("⏱ Scroll timeout reached")
+                break
+
+        # Collect unique offers
+        unique = {}
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
             cashback = await card.get_attribute("data-max-cashback-rate")
@@ -201,4 +212,6 @@ if __name__ == "__main__":
         print("❌ Database connection failed:", e)
         print("⚠️ Skipping initial scrape until DB is reachable")
 
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    # Use PORT env variable provided by Render
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
