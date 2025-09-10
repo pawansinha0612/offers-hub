@@ -44,7 +44,6 @@ offers_table = Table(
     Column("scraped_at", DateTime, server_default=func.now(), onupdate=func.now()),
 )
 
-# --- Schema Initialization ---
 def initialize_schema():
     with engine.connect() as conn:
         try:
@@ -60,7 +59,7 @@ def initialize_schema():
                 if not has_unique_store:
                     print("⚠ Unique constraint on 'store' missing, attempting to add...")
                     try:
-                        # Handle duplicates before adding constraint
+                        # Check for duplicates and remove them
                         conn.execute(text("""
                             DELETE FROM offers
                             WHERE ctid NOT IN (
@@ -69,6 +68,8 @@ def initialize_schema():
                                 GROUP BY store
                             );
                         """))
+                        conn.commit()
+                        # Add the unique constraint
                         conn.execute(text("""
                             ALTER TABLE offers
                             ADD CONSTRAINT unique_store UNIQUE (store);
@@ -76,7 +77,7 @@ def initialize_schema():
                         conn.commit()
                         print("✅ Unique constraint 'unique_store' added successfully")
                     except ProgrammingError as dup_error:
-                        print(f"❌ Failed to add constraint due to duplicates: {dup_error}")
+                        print(f"❌ Failed to add constraint due to duplicates or error: {dup_error}")
                         conn.rollback()
                 else:
                     print("✅ Unique constraint on 'store' already exists")
