@@ -44,6 +44,14 @@ offers_table = Table(
 
 metadata.create_all(engine)
 
+# --- DB Connection Verification ---
+try:
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    print("✅ Database connection successful")
+except Exception as e:
+    print("❌ Database connection failed:", e)
+
 # --- Flask app ---
 app = Flask(__name__)
 CORS(app)
@@ -92,7 +100,6 @@ async def scrape_shopback():
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
-        # Infinite scroll with dynamic wait
         prev_count = 0
         while True:
             await page.mouse.wheel(0, 5000)
@@ -101,7 +108,6 @@ async def scrape_shopback():
                     () => document.querySelectorAll('div.cursor_pointer.pos_relative').length > arguments[0]
                 """, prev_count, timeout=15000)
             except:
-                # Timeout: assume no new cards
                 pass
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
             print(f"Loaded {len(cards)} store cards")
@@ -109,7 +115,6 @@ async def scrape_shopback():
                 break
             prev_count = len(cards)
 
-        # Collect unique offers
         unique = {}
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
@@ -137,7 +142,9 @@ def run_scrape_sync():
 # --- Flask endpoints ---
 @app.route("/offers")
 def offers():
-    return jsonify(load_offers())
+    data = load_offers()
+    print(f"Returning {len(data)} offers from DB")
+    return jsonify(data)
 
 @app.route("/scrape-now")
 def scrape_now():
@@ -173,13 +180,4 @@ atexit.register(lambda: scheduler.shutdown())
 
 # --- Main ---
 if __name__ == "__main__":
-    try:
-        with engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
-        print("✅ Database connection successful")
-        # First synchronous scrape to ensure /offers has data immediately
-        run_scrape_sync()
-    except Exception as e:
-        print("❌ Database connection failed:", e)
-
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
