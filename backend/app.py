@@ -12,8 +12,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
 
-# --- Python version log ---
-print("Python version:", sys.version, flush=True)
+print("Python version:", sys.version)
 
 # --- Config ---
 DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -52,14 +51,19 @@ CORS(app)
 # --- DB helpers ---
 def save_offers(offers_list):
     with engine.begin() as conn:
+        if engine.dialect.name == "sqlite":
+            timestamp_func = "CURRENT_TIMESTAMP"
+        else:
+            timestamp_func = "NOW()"
+
         for offer in offers_list:
-            stmt = text("""
+            stmt = text(f"""
                 INSERT INTO offers (store, cashback, link, scraped_at)
-                VALUES (:store, :cashback, :link, NOW())
+                VALUES (:store, :cashback, :link, {timestamp_func})
                 ON CONFLICT (store) DO UPDATE
                 SET cashback = EXCLUDED.cashback,
                     link = EXCLUDED.link,
-                    scraped_at = NOW()
+                    scraped_at = {timestamp_func}
             """)
             conn.execute(stmt, offer)
 
@@ -93,7 +97,6 @@ async def scrape_shopback():
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
-        # Infinite scroll with dynamic wait
         prev_count = 0
         while True:
             await page.mouse.wheel(0, 5000)
@@ -104,12 +107,11 @@ async def scrape_shopback():
             except:
                 pass
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-            print(f"Loaded {len(cards)} store cards", flush=True)
+            print(f"Loaded {len(cards)} store cards")
             if len(cards) == prev_count:
                 break
             prev_count = len(cards)
 
-        # Collect unique offers
         unique = {}
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
@@ -130,9 +132,9 @@ def run_scrape_sync():
     try:
         offers = asyncio.run(scrape_shopback())
         save_offers(offers)
-        print(f"✅ Scraped {len(offers)} unique offers and saved", flush=True)
+        print(f"✅ Scraped {len(offers)} unique offers and saved")
     except Exception as e:
-        print("❌ Scrape failed:", e, flush=True)
+        print("❌ Scrape failed:", e)
 
 # --- Flask endpoints ---
 @app.route("/offers")
@@ -153,7 +155,7 @@ def home():
 scheduler = BackgroundScheduler()
 
 def scheduled_scrape():
-    print(f"{datetime.now()}: Scheduled scrape starting...", flush=True)
+    print(f"{datetime.now()}: Scheduled scrape starting...")
     run_scrape_sync()
 
 scheduler.add_job(func=scheduled_scrape, trigger="interval", hours=6)
@@ -163,9 +165,9 @@ def keep_alive_ping():
     if backend_url:
         try:
             requests.get(f"{backend_url}/offers", timeout=10)
-            print(f"{datetime.now()}: Keep-alive ping successful", flush=True)
+            print(f"{datetime.now()}: Keep-alive ping successful")
         except Exception as e:
-            print(f"{datetime.now()}: Keep-alive ping failed:", e, flush=True)
+            print(f"{datetime.now()}: Keep-alive ping failed:", e)
 
 scheduler.add_job(func=keep_alive_ping, trigger="interval", minutes=5)
 scheduler.start()
@@ -175,21 +177,20 @@ atexit.register(lambda: scheduler.shutdown())
 if __name__ == "__main__":
     try:
         with engine.connect() as conn:
-            # Test connection and fetch sample records
-            result = conn.execute(text("SELECT * FROM offers LIMIT 5")).fetchall()
-            print("✅ Database connection successful", flush=True)
-            if result:
-                print("Sample records from 'offers' table:", flush=True)
-                for row in result:
-                    print(dict(row), flush=True)
-            else:
-                print("⚠️ 'offers' table is empty", flush=True)
+            conn.execute(text("SELECT 1"))
+        print("✅ Database connection successful")
 
-        # Run initial scrape to populate /offers
+        # Print sample rows
+        with engine.connect() as conn:
+            stmt = select(offers_table).limit(5)
+            rows = conn.execute(stmt).fetchall()
+            print("Sample records from 'offers' table:")
+            for r in rows:
+                print(dict(r._mapping))
+
+        # First synchronous scrape
         run_scrape_sync()
-
     except Exception as e:
-        print("❌ Database connection failed:", e, flush=True)
+        print("❌ Database connection failed:", e)
 
-    # Start Flask app
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
