@@ -12,7 +12,8 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
 
-print("Python version:", sys.version)
+# --- Python version log ---
+print("Python version:", sys.version, flush=True)
 
 # --- Config ---
 DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -92,6 +93,7 @@ async def scrape_shopback():
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
+        # Infinite scroll with dynamic wait
         prev_count = 0
         while True:
             await page.mouse.wheel(0, 5000)
@@ -102,11 +104,12 @@ async def scrape_shopback():
             except:
                 pass
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-            print(f"Loaded {len(cards)} store cards")
+            print(f"Loaded {len(cards)} store cards", flush=True)
             if len(cards) == prev_count:
                 break
             prev_count = len(cards)
 
+        # Collect unique offers
         unique = {}
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
@@ -127,9 +130,9 @@ def run_scrape_sync():
     try:
         offers = asyncio.run(scrape_shopback())
         save_offers(offers)
-        print(f"✅ Scraped {len(offers)} unique offers and saved")
+        print(f"✅ Scraped {len(offers)} unique offers and saved", flush=True)
     except Exception as e:
-        print("❌ Scrape failed:", e)
+        print("❌ Scrape failed:", e, flush=True)
 
 # --- Flask endpoints ---
 @app.route("/offers")
@@ -150,7 +153,7 @@ def home():
 scheduler = BackgroundScheduler()
 
 def scheduled_scrape():
-    print(f"{datetime.now()}: Scheduled scrape starting...")
+    print(f"{datetime.now()}: Scheduled scrape starting...", flush=True)
     run_scrape_sync()
 
 scheduler.add_job(func=scheduled_scrape, trigger="interval", hours=6)
@@ -160,28 +163,33 @@ def keep_alive_ping():
     if backend_url:
         try:
             requests.get(f"{backend_url}/offers", timeout=10)
-            print(f"{datetime.now()}: Keep-alive ping successful")
+            print(f"{datetime.now()}: Keep-alive ping successful", flush=True)
         except Exception as e:
-            print(f"{datetime.now()}: Keep-alive ping failed:", e)
+            print(f"{datetime.now()}: Keep-alive ping failed:", e, flush=True)
 
 scheduler.add_job(func=keep_alive_ping, trigger="interval", minutes=5)
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown())
 
-# --- Verify DB content at startup ---
-def check_db():
-    try:
-        with engine.connect() as conn:
-            result = conn.execute(text("SELECT store, cashback, link FROM offers LIMIT 5")).fetchall()
-        print(f"✅ Database connection successful, sample data:")
-        for r in result:
-            print(f"Store: {r.store}, Cashback: {r.cashback}, Link: {r.link}")
-    except Exception as e:
-        print("❌ Database connection failed or no data:", e)
-
 # --- Main ---
 if __name__ == "__main__":
-    print("Python version:", sys.version)
-    check_db()  # Print DB sample at startup
+    try:
+        with engine.connect() as conn:
+            # Test connection and fetch sample records
+            result = conn.execute(text("SELECT * FROM offers LIMIT 5")).fetchall()
+            print("✅ Database connection successful", flush=True)
+            if result:
+                print("Sample records from 'offers' table:", flush=True)
+                for row in result:
+                    print(dict(row), flush=True)
+            else:
+                print("⚠️ 'offers' table is empty", flush=True)
 
+        # Run initial scrape to populate /offers
+        run_scrape_sync()
+
+    except Exception as e:
+        print("❌ Database connection failed:", e, flush=True)
+
+    # Start Flask app
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
