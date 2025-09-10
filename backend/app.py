@@ -9,8 +9,10 @@ import requests
 from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Text, DateTime, func, select, text
+from sqlalchemy.exc import ProgrammingError
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
+from sqlalchemy import inspect  # Import here to avoid circular dependency
 
 print("Python version:", sys.version)
 
@@ -42,10 +44,49 @@ offers_table = Table(
     Column("scraped_at", DateTime, server_default=func.now(), onupdate=func.now()),
 )
 
-metadata.create_all(engine)
+# --- Schema Initialization ---
+def initialize_schema():
+    with engine.connect() as conn:
+        try:
+            # Attempt to create the table with the unique constraint
+            metadata.create_all(engine)
+            print("✅ Table 'offers' created or already exists with unique constraint")
+        except ProgrammingError as e:
+            if "already exists" in str(e):
+                print("⚠ Table 'offers' already exists, checking constraint...")
+                # Check if unique constraint exists
+                insp = inspect(engine)
+                constraints = insp.get_unique_constraints("offers")
+                has_unique_store = any("store" in cols for c in constraints for cols in c["column_names"])
+                if not has_unique_store:
+                    print("⚠ Unique constraint on 'store' missing, attempting to add...")
+                    try:
+                        # Handle duplicates before adding constraint
+                        conn.execute(text("""
+                            DELETE FROM offers
+                            WHERE ctid NOT IN (
+                                SELECT MAX(ctid)
+                                FROM offers
+                                GROUP BY store
+                            );
+                        """))
+                        conn.execute(text("""
+                            ALTER TABLE offers
+                            ADD CONSTRAINT unique_store UNIQUE (store);
+                        """))
+                        conn.commit()
+                        print("✅ Unique constraint 'unique_store' added successfully")
+                    except ProgrammingError as dup_error:
+                        print(f"❌ Failed to add constraint due to duplicates: {dup_error}")
+                        conn.rollback()
+                else:
+                    print("✅ Unique constraint on 'store' already exists")
+            else:
+                print(f"❌ Schema creation error: {e}")
+                raise
 
 # --- Flask app ---
-app = Flask(__name__)
+app = Flask(__name__)  # Initialize app here
 CORS(app)
 
 # --- DB helpers ---
@@ -132,7 +173,6 @@ async def scrape_shopback():
         print(f"✅ Total offers scraped: {len(offers_list)}")
         return offers_list
 
-
 def run_scrape_sync():
     try:
         offers = asyncio.run(scrape_shopback())
@@ -184,6 +224,9 @@ if __name__ == "__main__":
             conn.execute(text("SELECT 1"))
         print("✅ Database connection successful")
 
+        # Initialize or update schema
+        initialize_schema()
+
         # Print a few sample records from offers table
         try:
             with engine.connect() as conn:
@@ -201,4 +244,3 @@ if __name__ == "__main__":
         print("❌ Database connection failed:", e)
 
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
-

@@ -3,7 +3,7 @@ Flask==2.3.2
 Flask-Cors==3.0.10
 SQLAlchemy==2.0.25
 psycopg2-binary==2.9.9
-requests==2.32.0
+requests==2.33.0
 
 # Playwright
 playwright==1.43.0
