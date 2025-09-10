@@ -87,17 +87,24 @@ async def scrape_shopback():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=True,
-            args=["--no-sandbox", "--disable-dev-shm-usage"]
+            args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
         )
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
 
-        # Infinite scroll
+        # Infinite scroll with dynamic wait
         prev_count = 0
         while True:
             await page.mouse.wheel(0, 5000)
-            await page.wait_for_timeout(2000)
+            try:
+                await page.wait_for_function("""
+                    () => document.querySelectorAll('div.cursor_pointer.pos_relative').length > arguments[0]
+                """, prev_count, timeout=15000)
+            except:
+                # Timeout: assume no new cards
+                pass
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
+            print(f"Loaded {len(cards)} store cards")
             if len(cards) == prev_count:
                 break
             prev_count = len(cards)
@@ -170,7 +177,8 @@ if __name__ == "__main__":
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
         print("✅ Database connection successful")
-        threading.Thread(target=run_scrape_sync, daemon=True).start()
+        # First synchronous scrape to ensure /offers has data immediately
+        run_scrape_sync()
     except Exception as e:
         print("❌ Database connection failed:", e)
 
