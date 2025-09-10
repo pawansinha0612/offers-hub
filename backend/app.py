@@ -87,7 +87,6 @@ def load_offers():
         })
     return result
 
-# --- Scraper ---
 async def scrape_shopback():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -95,38 +94,44 @@ async def scrape_shopback():
             args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
         )
         page = await browser.new_page()
-        await page.goto("https://www.shopback.com.au/all-stores", timeout=120000)
+        await page.goto("https://www.shopback.com.au/all-stores", timeout=180000)
 
+        # --- Scroll until all offers are loaded ---
         prev_count = 0
+        stable_scrolls = 0
         while True:
-            await page.mouse.wheel(0, 5000)
-            try:
-                await page.wait_for_function("""
-                    () => document.querySelectorAll('div.cursor_pointer.pos_relative').length > arguments[0]
-                """, prev_count, timeout=15000)
-            except:
-                pass
-            cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
-            print(f"Loaded {len(cards)} store cards")
-            if len(cards) == prev_count:
-                break
-            prev_count = len(cards)
+            await page.mouse.wheel(0, 1000)
+            await asyncio.sleep(1.5)  # small delay to allow new offers to load
 
-        unique = {}
+            cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
+            if len(cards) == prev_count:
+                stable_scrolls += 1
+            else:
+                stable_scrolls = 0
+
+            if stable_scrolls >= 3:  # if same count for 3 scrolls, assume fully loaded
+                break
+
+            prev_count = len(cards)
+            print(f"Loaded {len(cards)} store cards so far...")
+
+        # --- Collect all offers ---
+        offers_list = []
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
             cashback = await card.get_attribute("data-max-cashback-rate")
             link = await card.get_attribute("data-feature-destination-url")
             if name:
-                key = name.strip().lower()
-                unique[key] = {
+                offers_list.append({
                     "store": name.strip(),
                     "cashback": cashback.strip() if cashback else "N/A",
                     "link": link.strip() if link else "N/A"
-                }
+                })
 
         await browser.close()
-        return list(unique.values())
+        print(f"✅ Total offers scraped: {len(offers_list)}")
+        return offers_list
+
 
 def run_scrape_sync():
     try:
@@ -173,24 +178,27 @@ scheduler.add_job(func=keep_alive_ping, trigger="interval", minutes=5)
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown())
 
-# --- Main ---
 if __name__ == "__main__":
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
         print("✅ Database connection successful")
 
-        # Print sample rows
-        with engine.connect() as conn:
-            stmt = select(offers_table).limit(5)
-            rows = conn.execute(stmt).fetchall()
-            print("Sample records from 'offers' table:")
-            for r in rows:
-                print(dict(r._mapping))
+        # Print a few sample records from offers table
+        try:
+            with engine.connect() as conn:
+                result = conn.execute(text("SELECT * FROM offers LIMIT 5")).mappings().all()
+                print("Sample records from 'offers' table:")
+                for r in result:
+                    print(dict(r))
+        except Exception as e:
+            print("❌ Failed to fetch sample records:", e)
 
-        # First synchronous scrape
+        # First synchronous scrape to populate /offers immediately
         run_scrape_sync()
+
     except Exception as e:
         print("❌ Database connection failed:", e)
 
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+
