@@ -44,14 +44,6 @@ offers_table = Table(
 
 metadata.create_all(engine)
 
-# --- DB Connection Verification ---
-try:
-    with engine.connect() as conn:
-        conn.execute(text("SELECT 1"))
-    print("✅ Database connection successful")
-except Exception as e:
-    print("❌ Database connection failed:", e)
-
 # --- Flask app ---
 app = Flask(__name__)
 CORS(app)
@@ -142,9 +134,7 @@ def run_scrape_sync():
 # --- Flask endpoints ---
 @app.route("/offers")
 def offers():
-    data = load_offers()
-    print(f"Returning {len(data)} offers from DB")
-    return jsonify(data)
+    return jsonify(load_offers())
 
 @app.route("/scrape-now")
 def scrape_now():
@@ -178,6 +168,20 @@ scheduler.add_job(func=keep_alive_ping, trigger="interval", minutes=5)
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown())
 
+# --- Verify DB content at startup ---
+def check_db():
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT store, cashback, link FROM offers LIMIT 5")).fetchall()
+        print(f"✅ Database connection successful, sample data:")
+        for r in result:
+            print(f"Store: {r.store}, Cashback: {r.cashback}, Link: {r.link}")
+    except Exception as e:
+        print("❌ Database connection failed or no data:", e)
+
 # --- Main ---
 if __name__ == "__main__":
+    print("Python version:", sys.version)
+    check_db()  # Print DB sample at startup
+
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
