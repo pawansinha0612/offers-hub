@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, 
 from sqlalchemy.exc import ProgrammingError
 from apscheduler.schedulers.background import BackgroundScheduler
 from playwright.async_api import async_playwright
-from sqlalchemy import inspect  # Import here to avoid circular dependency
+from sqlalchemy import inspect
 
 print("Python version:", sys.version)
 
@@ -54,7 +54,6 @@ def initialize_schema():
         except ProgrammingError as e:
             if "already exists" in str(e):
                 print("⚠ Table 'offers' already exists, checking constraint...")
-                # Check if unique constraint exists
                 insp = inspect(engine)
                 constraints = insp.get_unique_constraints("offers")
                 has_unique_store = any("store" in cols for c in constraints for cols in c["column_names"])
@@ -85,8 +84,11 @@ def initialize_schema():
                 print(f"❌ Schema creation error: {e}")
                 raise
 
+# Run schema initialization on module import
+initialize_schema()
+
 # --- Flask app ---
-app = Flask(__name__)  # Initialize app here
+app = Flask(__name__)
 CORS(app)
 
 # --- DB helpers ---
@@ -222,10 +224,7 @@ if __name__ == "__main__":
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
-        print("✅ Database connection successful")
-
-        # Initialize or update schema
-        initialize_schema()
+        print("✅ Database connection successful (main block)")
 
         # Print a few sample records from offers table
         try:
