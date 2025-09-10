@@ -108,29 +108,30 @@ async def scrape_shopback():
             args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
         )
         page = await browser.new_page()
-        await page.goto("https://www.shopback.com.au/all-stores", timeout=180000)
+        await page.goto("https://www.shopback.com.au/all-stores", timeout=300000)
 
         # --- Scroll until all offers are loaded ---
         prev_count = 0
         stable_scrolls = 0
-        while True:
+        max_scroll_attempts = 10  # Prevent infinite loop
+        scroll_count = 0
+        while scroll_count < max_scroll_attempts:
             await page.mouse.wheel(0, 1000)
-            await asyncio.sleep(1.5)
-
+            await asyncio.sleep(2.0)  # Increased delay for stability
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
+            print(f"Loaded {len(cards)} store cards so far after scroll {scroll_count + 1}")
             if len(cards) == prev_count:
                 stable_scrolls += 1
             else:
                 stable_scrolls = 0
-
             if stable_scrolls >= 3:
                 break
-
             prev_count = len(cards)
-            print(f"Loaded {len(cards)} store cards so far...")
+            scroll_count += 1
 
         # --- Collect all offers ---
         offers_list = []
+        cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
             cashback = await card.get_attribute("data-max-cashback-rate")
