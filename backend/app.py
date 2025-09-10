@@ -38,52 +38,26 @@ offers_table = Table(
     "offers",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("store", String(255), unique=True, index=True),
+    Column("store", String(255)),
     Column("cashback", String(50)),
     Column("link", Text),
     Column("scraped_at", DateTime, server_default=func.now(), onupdate=func.now()),
 )
 
+# --- Schema Initialization ---
 def initialize_schema():
     with engine.connect() as conn:
         try:
-            # Attempt to create the table with the unique constraint
+            # Drop the table if it exists
+            conn.execute(text("DROP TABLE IF EXISTS offers"))
+            conn.commit()
+            # Recreate the table
             metadata.create_all(engine)
-            print("✅ Table 'offers' created or already exists with unique constraint")
-        except ProgrammingError as e:
-            if "already exists" in str(e):
-                print("⚠ Table 'offers' already exists, checking constraint...")
-                insp = inspect(engine)
-                constraints = insp.get_unique_constraints("offers")
-                has_unique_store = any("store" in cols for c in constraints for cols in c["column_names"])
-                if not has_unique_store:
-                    print("⚠ Unique constraint on 'store' missing, attempting to add...")
-                    try:
-                        # Check for duplicates and remove them
-                        conn.execute(text("""
-                            DELETE FROM offers
-                            WHERE ctid NOT IN (
-                                SELECT MAX(ctid)
-                                FROM offers
-                                GROUP BY store
-                            );
-                        """))
-                        conn.commit()
-                        # Add the unique constraint
-                        conn.execute(text("""
-                            ALTER TABLE offers
-                            ADD CONSTRAINT unique_store UNIQUE (store);
-                        """))
-                        conn.commit()
-                        print("✅ Unique constraint 'unique_store' added successfully")
-                    except ProgrammingError as dup_error:
-                        print(f"❌ Failed to add constraint due to duplicates or error: {dup_error}")
-                        conn.rollback()
-                else:
-                    print("✅ Unique constraint on 'store' already exists")
-            else:
-                print(f"❌ Schema creation error: {e}")
-                raise
+            print("✅ Table 'offers' dropped and recreated successfully")
+        except Exception as e:
+            print(f"❌ Error during table drop/recreate: {e}")
+            conn.rollback()
+            raise
 
 # Run schema initialization on module import
 initialize_schema()
@@ -104,10 +78,6 @@ def save_offers(offers_list):
             stmt = text(f"""
                 INSERT INTO offers (store, cashback, link, scraped_at)
                 VALUES (:store, :cashback, :link, {timestamp_func})
-                ON CONFLICT (store) DO UPDATE
-                SET cashback = EXCLUDED.cashback,
-                    link = EXCLUDED.link,
-                    scraped_at = {timestamp_func}
             """)
             conn.execute(stmt, offer)
 
@@ -145,7 +115,7 @@ async def scrape_shopback():
         stable_scrolls = 0
         while True:
             await page.mouse.wheel(0, 1000)
-            await asyncio.sleep(1.5)  # small delay to allow new offers to load
+            await asyncio.sleep(1.5)
 
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
             if len(cards) == prev_count:
@@ -153,7 +123,7 @@ async def scrape_shopback():
             else:
                 stable_scrolls = 0
 
-            if stable_scrolls >= 3:  # if same count for 3 scrolls, assume fully loaded
+            if stable_scrolls >= 3:
                 break
 
             prev_count = len(cards)
@@ -226,16 +196,6 @@ if __name__ == "__main__":
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
         print("✅ Database connection successful (main block)")
-
-        # Print a few sample records from offers table
-        try:
-            with engine.connect() as conn:
-                result = conn.execute(text("SELECT * FROM offers LIMIT 5")).mappings().all()
-                print("Sample records from 'offers' table:")
-                for r in result:
-                    print(dict(r))
-        except Exception as e:
-            print("❌ Failed to fetch sample records:", e)
 
         # First synchronous scrape to populate /offers immediately
         run_scrape_sync()
