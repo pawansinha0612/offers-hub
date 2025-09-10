@@ -109,15 +109,16 @@ async def scrape_shopback():
         )
         page = await browser.new_page()
         await page.goto("https://www.shopback.com.au/all-stores", timeout=300000)
+        print(f"Page loaded with status: {await page.evaluate('window.performance.timing.loadEventEnd > 0')}")
 
         # --- Scroll until all offers are loaded ---
         prev_count = 0
         stable_scrolls = 0
-        max_scroll_attempts = 10  # Prevent infinite loop
+        max_scroll_attempts = 20  # Increased to allow more scrolls
         scroll_count = 0
         while scroll_count < max_scroll_attempts:
             await page.mouse.wheel(0, 1000)
-            await asyncio.sleep(2.0)  # Increased delay for stability
+            await asyncio.sleep(2.0)
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
             print(f"Loaded {len(cards)} store cards so far after scroll {scroll_count + 1}")
             if len(cards) == prev_count:
@@ -128,6 +129,14 @@ async def scrape_shopback():
                 break
             prev_count = len(cards)
             scroll_count += 1
+
+        # --- Log network requests ---
+        requests = await page.evaluate("""
+            () => Array.from(performance.getEntriesByType('resource'))
+                .filter(r => r.initiatorType === 'fetch' || r.initiatorType === 'xmlhttprequest')
+                .map(r => ({ name: r.name, duration: r.duration }))
+        """)
+        print(f"Network requests: {requests}")
 
         # --- Collect all offers ---
         offers_list = []
