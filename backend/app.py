@@ -48,10 +48,8 @@ offers_table = Table(
 def initialize_schema():
     with engine.connect() as conn:
         try:
-            # Drop the table if it exists
             conn.execute(text("DROP TABLE IF EXISTS offers"))
             conn.commit()
-            # Recreate the table
             metadata.create_all(engine)
             print("✅ Table 'offers' dropped and recreated successfully")
         except Exception as e:
@@ -59,7 +57,6 @@ def initialize_schema():
             conn.rollback()
             raise
 
-# Run schema initialization on module import
 initialize_schema()
 
 # --- Flask app ---
@@ -101,6 +98,48 @@ def load_offers():
         })
     return result
 
+
+# --- Cashback Normalizer ---
+def normalize_cashback(cashback_raw: str) -> str:
+    """
+    Normalize cashback values:
+    - "Up to 11%" → "11%"
+    - "$800 Cashback" → "$800"
+    - "800%" → "$800" (treat unrealistic % as $)
+    - "50" → "50%"
+    - "2.5" → "2.5%"
+    """
+    if not cashback_raw:
+        return "N/A"
+
+    cb = cashback_raw.strip()
+
+    # Already contains %
+    if "%" in cb:
+        try:
+            val = float(cb.replace("%", "").strip())
+            if val > 100:  # Unrealistic % → treat as dollars
+                return f"${int(val)}"
+            return f"{val}%"
+        except:
+            return cb
+
+    # Already contains $
+    if "$" in cb:
+        return cb
+
+    # Just a number (int or float)
+    try:
+        val = float(cb)
+        if val > 100:
+            return f"${int(val)}"
+        # Keep decimals if needed (2.5 → 2.5%)
+        return f"{val:g}%"  # :g removes trailing .0
+    except ValueError:
+        return cb
+
+
+# --- Scraper ---
 async def scrape_shopback():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -114,7 +153,7 @@ async def scrape_shopback():
         # --- Scroll until all offers are loaded ---
         prev_count = 0
         stable_scrolls = 0
-        max_scroll_attempts = 20  # Increased to allow more scrolls
+        max_scroll_attempts = 20
         scroll_count = 0
         while scroll_count < max_scroll_attempts:
             await page.mouse.wheel(0, 1000)
@@ -130,25 +169,20 @@ async def scrape_shopback():
             prev_count = len(cards)
             scroll_count += 1
 
-        # --- Log network requests ---
-        requests = await page.evaluate("""
-            () => Array.from(performance.getEntriesByType('resource'))
-                .filter(r => r.initiatorType === 'fetch' || r.initiatorType === 'xmlhttprequest')
-                .map(r => ({ name: r.name, duration: r.duration }))
-        """)
-        print(f"Network requests: {requests}")
-
         # --- Collect all offers ---
         offers_list = []
         cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
         for card in cards:
             name = await card.get_attribute("data-merchant-name")
-            cashback = await card.get_attribute("data-max-cashback-rate")
+            cashback_raw = await card.get_attribute("data-max-cashback-rate")
             link = await card.get_attribute("data-feature-destination-url")
+
+            cashback = normalize_cashback(cashback_raw)
+
             if name:
                 offers_list.append({
                     "store": name.strip(),
-                    "cashback": cashback.strip() if cashback else "N/A",
+                    "cashback": cashback,
                     "link": link.strip() if link else "N/A"
                 })
 
@@ -207,7 +241,7 @@ if __name__ == "__main__":
             conn.execute(text("SELECT 1"))
         print("✅ Database connection successful (main block)")
 
-        # First synchronous scrape to populate /offers immediately
+        # First scrape immediately
         run_scrape_sync()
 
     except Exception as e:

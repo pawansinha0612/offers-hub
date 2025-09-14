@@ -1,7 +1,7 @@
 import sqlite3
 import json
 
-def export_to_json(db_path="offers.db", json_path="../frontend/public/offers.json"):
+def export_to_json(db_path="offers.db", json_path="../frontend/src/offers.json"):
     try:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()

@@ -1,0 +1,2186 @@
+[
+  {
+    "id": 1,
+    "store": "Amazon",
+    "cashback": "11%",
+    "link": "https://www.shopback.com.au/amazon-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 2,
+    "store": "Trip.com",
+    "cashback": "8%",
+    "link": "https://www.shopback.com.au/trip-com",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 3,
+    "store": "Uber Eats",
+    "cashback": "25%",
+    "link": "https://www.shopback.com.au/ubereats",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 4,
+    "store": "Myer",
+    "cashback": "5.4%",
+    "link": "https://www.shopback.com.au/myer",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 5,
+    "store": "Domino's",
+    "cashback": "15%",
+    "link": "https://www.shopback.com.au/dominos",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 6,
+    "store": "David Jones",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/david-jones",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 7,
+    "store": "Foot Locker",
+    "cashback": "12.5%",
+    "link": "https://www.shopback.com.au/footlocker",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 8,
+    "store": "DoorDash",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/doordash-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 9,
+    "store": "Petbarn",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/petbarn",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 10,
+    "store": "Cotton On & Co",
+    "cashback": "16%",
+    "link": "https://www.shopback.com.au/cotton-on-co",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 11,
+    "store": "The Good Guys",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/the-good-guys",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 12,
+    "store": "Temple & Webster",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/temple-and-webster",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 13,
+    "store": "Amazon",
+    "cashback": "11%",
+    "link": "https://www.shopback.com.au/amazon-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 14,
+    "store": "Booking.com",
+    "cashback": "5.5%",
+    "link": "https://www.shopback.com.au/booking-com",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 15,
+    "store": "Temu",
+    "cashback": "25%",
+    "link": "https://www.shopback.com.au/temu",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 16,
+    "store": "Woolworths Online",
+    "cashback": "1%",
+    "link": "https://www.shopback.com.au/woolworths",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 17,
+    "store": "Agoda",
+    "cashback": "5.5%",
+    "link": "https://www.shopback.com.au/agoda",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 18,
+    "store": "SHEIN",
+    "cashback": "7.2%",
+    "link": "https://www.shopback.com.au/shein",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 19,
+    "store": "Prime Survey",
+    "cashback": "50%",
+    "link": "https://www.shopback.com.au/prime-survey",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 20,
+    "store": "Trip.com",
+    "cashback": "8%",
+    "link": "https://www.shopback.com.au/trip-com",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 21,
+    "store": "Uber Eats",
+    "cashback": "25%",
+    "link": "https://www.shopback.com.au/ubereats",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 22,
+    "store": "Expedia",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/expedia-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 23,
+    "store": "Myer",
+    "cashback": "5.4%",
+    "link": "https://www.shopback.com.au/myer",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 24,
+    "store": "Domino's",
+    "cashback": "15%",
+    "link": "https://www.shopback.com.au/dominos",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 25,
+    "store": "David Jones",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/david-jones",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 26,
+    "store": "BWS",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/bws",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 27,
+    "store": "adidas",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/adidas",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 28,
+    "store": "Sephora",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/sephora",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 29,
+    "store": "Foot Locker",
+    "cashback": "12.5%",
+    "link": "https://www.shopback.com.au/footlocker",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 30,
+    "store": "Petstock",
+    "cashback": "5.4%",
+    "link": "https://www.shopback.com.au/petstock",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 31,
+    "store": "DoorDash",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/doordash-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 32,
+    "store": "ShopBack Survey - Snap & Earn Program_September",
+    "cashback": "0%",
+    "link": "https://www.shopback.com.au/sb-survey-snapearnsept",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 33,
+    "store": "Petbarn",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/petbarn",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 34,
+    "store": "Country Road",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/country-road",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 35,
+    "store": "Cotton On & Co",
+    "cashback": "16%",
+    "link": "https://www.shopback.com.au/cotton-on-co",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 36,
+    "store": "Wotif",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/wotif",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 37,
+    "store": "The Good Guys",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/the-good-guys",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 38,
+    "store": "Klook",
+    "cashback": "5.5%",
+    "link": "https://www.shopback.com.au/klook",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 39,
+    "store": "Temple & Webster",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/temple-and-webster",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 40,
+    "store": "Bonds",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/bonds",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 41,
+    "store": "MyDeal.com.au",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/mydeal",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 42,
+    "store": "Best & Less",
+    "cashback": "15%",
+    "link": "https://www.shopback.com.au/best-and-less",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 43,
+    "store": "iHerb",
+    "cashback": "18%",
+    "link": "https://www.shopback.com.au/iherb",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 44,
+    "store": "lululemon",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/lululemon",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 45,
+    "store": "Etsy",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/etsy",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 46,
+    "store": "rebel",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/rebel",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 47,
+    "store": "Apple Store Online",
+    "cashback": "18%",
+    "link": "https://www.shopback.com.au/apple",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 48,
+    "store": "Shopify",
+    "cashback": "40%",
+    "link": "https://www.shopback.com.au/shopify",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 49,
+    "store": "Pizza Hut",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/pizza-hut",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 50,
+    "store": "GetYourGuide",
+    "cashback": "12%",
+    "link": "https://www.shopback.com.au/get-your-guide",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 51,
+    "store": "Compare Electricity and Gas",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/compare-electricity-gas",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 52,
+    "store": "Uber Rider",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/uber-rider",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 53,
+    "store": "JD Sports",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/jd-sports",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 54,
+    "store": "Kiehl's",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/kiehls",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 55,
+    "store": "Viator - A TripAdvisor Company",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/viator",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 56,
+    "store": "Luxury Escapes",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/luxury-escapes",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 57,
+    "store": "Everyday Market",
+    "cashback": "18%",
+    "link": "https://www.shopback.com.au/everyday-market",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 58,
+    "store": "Baby Bunting",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/baby-bunting",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 59,
+    "store": "Boost Mobile",
+    "cashback": "5.5%",
+    "link": "https://www.shopback.com.au/boost-mobile",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 60,
+    "store": "Beauty Amora",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/beauty-amora",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 61,
+    "store": "New Balance",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/new-balance",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 62,
+    "store": "Lancome",
+    "cashback": "4.6%",
+    "link": "https://www.shopback.com.au/lancome",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 63,
+    "store": "ASOS",
+    "cashback": "3.6%",
+    "link": "https://www.shopback.com.au/asos",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 64,
+    "store": "Under Armour",
+    "cashback": "12%",
+    "link": "https://www.shopback.com.au/under-armour",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 65,
+    "store": "Optus",
+    "cashback": "$230",
+    "link": "https://www.shopback.com.au/optus",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 66,
+    "store": "Forever New",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/forever-new",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 67,
+    "store": "Nespresso",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/nespresso-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 68,
+    "store": "Accor Live Limitless",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/accor-live-limitless",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 69,
+    "store": "Flight Centre",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/flight-centre",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 70,
+    "store": "Dyson",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/dyson",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 71,
+    "store": "Estee Lauder",
+    "cashback": "12%",
+    "link": "https://www.shopback.com.au/estee-lauder",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 72,
+    "store": "ShopBack Survey - Snap & Earn Program_August",
+    "cashback": "0%",
+    "link": "https://www.shopback.com.au/sb-survey-snapearnaugust",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 73,
+    "store": "H&M",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/hm",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 74,
+    "store": "Ticketek",
+    "cashback": "0.25%",
+    "link": "https://www.shopback.com.au/ticketek",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 75,
+    "store": "Crocs",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/crocs-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 76,
+    "store": "Groupon",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/groupon",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 77,
+    "store": "Healthylife",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/healthylife",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 78,
+    "store": "Xero",
+    "cashback": "50%",
+    "link": "https://www.shopback.com.au/xero",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 79,
+    "store": "Princess Polly",
+    "cashback": "8.5%",
+    "link": "https://www.shopback.com.au/princess-polly",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 80,
+    "store": "City Beach",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/city-beach",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 81,
+    "store": "Spotlight",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/spotlight",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 82,
+    "store": "Pelago by Singapore Airlines",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/pelago-by-singapore-airlines",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 83,
+    "store": "DECJUBA",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/decjuba",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 84,
+    "store": "Airalo",
+    "cashback": "14%",
+    "link": "https://www.shopback.com.au/airalo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 85,
+    "store": "ShopBack Survey - ShopFest Australia Survey",
+    "cashback": "0%",
+    "link": "https://www.shopback.com.au/sb-survey-shopfestaustralia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 86,
+    "store": "Liquorland",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/liquorland",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 87,
+    "store": "Compare The Market",
+    "cashback": "100%",
+    "link": "https://www.shopback.com.au/compare-the-market",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 88,
+    "store": "La Roche-Posay",
+    "cashback": "3.6%",
+    "link": "https://www.shopback.com.au/la-roche-posay",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 89,
+    "store": "Oz Hair and Beauty",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/oz-hair-and-beauty",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 90,
+    "store": "Stylevana",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/stylevana",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 91,
+    "store": "Europcar",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/europcar",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 92,
+    "store": "Pillow Talk",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/pillow-talk",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 93,
+    "store": "The Collagen Co.",
+    "cashback": "25%",
+    "link": "https://www.shopback.com.au/the-collagen-co",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 94,
+    "store": "Lucid Survey",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/lucid-survey",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 95,
+    "store": "Samsung",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/samsung-au",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 96,
+    "store": "Survey Wall",
+    "cashback": "50%",
+    "link": "https://www.shopback.com.au/survey-wall",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 97,
+    "store": "Cotton On KIDS",
+    "cashback": "16%",
+    "link": "https://www.shopback.com.au/cotton-on-kids",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 98,
+    "store": "Sydney Airport Parking",
+    "cashback": "2.1%",
+    "link": "https://www.shopback.com.au/sydney-airport-parking",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 99,
+    "store": "Elite Supps",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/elite-supps",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 100,
+    "store": "Disney+",
+    "cashback": "25%",
+    "link": "https://www.shopback.com.au/disney-plus",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 101,
+    "store": "Lorna Jane",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/lorna-jane",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 102,
+    "store": "Strand",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/strand",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 103,
+    "store": "ShopBack Surveys - Swisse",
+    "cashback": "0%",
+    "link": "https://www.shopback.com.au/shopback-surveys-swisse",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 104,
+    "store": "Hotels.com",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/hotels-com",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 105,
+    "store": "Puma",
+    "cashback": "9%",
+    "link": "https://www.shopback.com.au/puma",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 106,
+    "store": "ShopBack Survey - Snap Survey",
+    "cashback": "0%",
+    "link": "https://www.shopback.com.au/sb-survey-snapsurvey",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 107,
+    "store": "Aje.",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/aje",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 108,
+    "store": "Sony",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/sony",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 109,
+    "store": "LSKD",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/lskd",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 110,
+    "store": "VistaPrint",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/vistaprint",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 111,
+    "store": "Nike",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/nike",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 112,
+    "store": "Kitchen Warehouse",
+    "cashback": "4.2%",
+    "link": "https://www.shopback.com.au/kitchen-warehouse",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 113,
+    "store": "Glassons",
+    "cashback": "2.4%",
+    "link": "https://www.shopback.com.au/glassons",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 114,
+    "store": "Culture Kings",
+    "cashback": "18%",
+    "link": "https://www.shopback.com.au/culturekings",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 115,
+    "store": "BCF",
+    "cashback": "5.6%",
+    "link": "https://www.shopback.com.au/bcf",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 116,
+    "store": "ASICS",
+    "cashback": "8.5%",
+    "link": "https://www.shopback.com.au/asics",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 117,
+    "store": "Vodafone Mobile",
+    "cashback": "80%",
+    "link": "https://www.shopback.com.au/vodafone",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 118,
+    "store": "LEGO",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/lego",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 119,
+    "store": "Sportsgirl",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/sportsgirl",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 120,
+    "store": "Witchery",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/witchery",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 121,
+    "store": "Amazon Music Unlimited",
+    "cashback": "2.2%",
+    "link": "https://www.shopback.com.au/amazon-music-unlimited",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 122,
+    "store": "City Chic",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/city-chic",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 123,
+    "store": "Harris Scarfe",
+    "cashback": "1.2%",
+    "link": "https://www.shopback.com.au/harris-scarfe",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 124,
+    "store": "Supercheap Auto",
+    "cashback": "1.4%",
+    "link": "https://www.shopback.com.au/supercheap-auto",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 125,
+    "store": "Myprotein",
+    "cashback": "14%",
+    "link": "https://www.shopback.com.au/myprotein",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 126,
+    "store": "White Fox Boutique",
+    "cashback": "2.4%",
+    "link": "https://www.shopback.com.au/white-fox-boutique",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 127,
+    "store": "Exetel",
+    "cashback": "85%",
+    "link": "https://www.shopback.com.au/exetel-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 128,
+    "store": "AVIS",
+    "cashback": "9.1%",
+    "link": "https://www.shopback.com.au/avis",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 129,
+    "store": "Skyscanner",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/skyscanner",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 130,
+    "store": "Cover-More Travel Insurance",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/cover-more-travel-insurance",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 131,
+    "store": "Anaconda",
+    "cashback": "1.2%",
+    "link": "https://www.shopback.com.au/anaconda",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 132,
+    "store": "Petal & Pup",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/petal-pup",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 133,
+    "store": "Meshki",
+    "cashback": "8.5%",
+    "link": "https://www.shopback.com.au/meshki",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 134,
+    "store": "The Athlete's Foot",
+    "cashback": "2.1%",
+    "link": "https://www.shopback.com.au/the-athletes-foot",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 135,
+    "store": "Bed Bath N' Table",
+    "cashback": "4.8%",
+    "link": "https://www.shopback.com.au/bed-bath-n-table",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 136,
+    "store": "Qatar Airways",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/qatar-airways",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 137,
+    "store": "Stayz",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/stayz",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 138,
+    "store": "Kathmandu",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/kathmandu",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 139,
+    "store": "Showpo",
+    "cashback": "4.2%",
+    "link": "https://www.shopback.com.au/showpo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 140,
+    "store": "YSL Beauty",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/ysl-beauty",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 141,
+    "store": "Koala",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/koala",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 142,
+    "store": "Platypus Shoes",
+    "cashback": "3.6%",
+    "link": "https://www.shopback.com.au/platypus-shoes",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 143,
+    "store": "Paula's Choice",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/paulas-choice",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 144,
+    "store": "Youfoodz",
+    "cashback": "45%",
+    "link": "https://www.shopback.com.au/youfoodz",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 145,
+    "store": "EnergyAustralia (Compare)",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/energyaustralia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 146,
+    "store": "Broadband Comparison",
+    "cashback": "90%",
+    "link": "https://www.shopback.com.au/broadband-comparison",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 147,
+    "store": "Muscle Nation",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/muscle-nation",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 148,
+    "store": "CHARLES & KEITH",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/charles-keith",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 149,
+    "store": "Lovehoney",
+    "cashback": "9%",
+    "link": "https://www.shopback.com.au/lovehoney",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 150,
+    "store": "Specsavers",
+    "cashback": "4.8%",
+    "link": "https://www.shopback.com.au/specsavers",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 151,
+    "store": "Red Energy (Compare)",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/red-energy",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 152,
+    "store": "Lenovo",
+    "cashback": "2.75%",
+    "link": "https://www.shopback.com.au/lenovo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 153,
+    "store": "SHEIKE",
+    "cashback": "2.4%",
+    "link": "https://www.shopback.com.au/sheike",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 154,
+    "store": "YesStyle",
+    "cashback": "2.4%",
+    "link": "https://www.shopback.com.au/yesstyle",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 155,
+    "store": "Traveloka",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/traveloka",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 156,
+    "store": "amaysim Mobile",
+    "cashback": "65%",
+    "link": "https://www.shopback.com.au/amaysim-mobile",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 157,
+    "store": "First Choice Liquor",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/first-choice-liquor",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 158,
+    "store": "PrettyLittleThing",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/prettylittlething",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 159,
+    "store": "Aunt Betty Travel",
+    "cashback": "1.4%",
+    "link": "https://www.shopback.com.au/aunt-betty-travel",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 160,
+    "store": "Coach Outlet",
+    "cashback": "2.8%",
+    "link": "https://www.shopback.com.au/coach-outlet",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 161,
+    "store": "Shoes & Sox",
+    "cashback": "9%",
+    "link": "https://www.shopback.com.au/shoes-and-sox",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 162,
+    "store": "Health, Skincare & Hair Essentials at Chemist Warehouse",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/health-skincare-hair-essentials-cwh",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 163,
+    "store": "Swaggle Pets",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/swaggle",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 164,
+    "store": "Bras N Things",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/bras-n-things",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 165,
+    "store": "Pet Circle",
+    "cashback": "1%",
+    "link": "https://www.shopback.com.au/pet-circle",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 166,
+    "store": "Budget",
+    "cashback": "9.1%",
+    "link": "https://www.shopback.com.au/budget-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 167,
+    "store": "Bing Lee",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/bing-lee",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 168,
+    "store": "House AU",
+    "cashback": "5.6%",
+    "link": "https://www.shopback.com.au/house",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 169,
+    "store": "HALARA",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/halara",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 170,
+    "store": "Novo Shoes",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/novo-shoes",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 171,
+    "store": "Olive Young",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/olive-young",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 172,
+    "store": "Kerastase",
+    "cashback": "3.9%",
+    "link": "https://www.shopback.com.au/kerastase",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 173,
+    "store": "Shaver Shop",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/shaver-shop",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 174,
+    "store": "Tmall",
+    "cashback": "0.8%",
+    "link": "https://www.shopback.com.au/tmall",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 175,
+    "store": "Ninja Kitchen",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/ninja-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 176,
+    "store": "Jo Mercer",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/jo-mercer",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 177,
+    "store": "HelloFresh",
+    "cashback": "60%",
+    "link": "https://www.shopback.com.au/hellofresh",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 178,
+    "store": "Converse",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/converse",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 179,
+    "store": "Stylerunner",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/stylerunner",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 180,
+    "store": "Swarovski",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/swarovski",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 181,
+    "store": "IHG Hotels & Resorts",
+    "cashback": "1%",
+    "link": "https://www.shopback.com.au/ihg-hotels-and-resorts",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 182,
+    "store": "Skechers",
+    "cashback": "1.4%",
+    "link": "https://www.shopback.com.au/skechers",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 183,
+    "store": "RedBalloon",
+    "cashback": "15%",
+    "link": "https://www.shopback.com.au/redballoon",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 184,
+    "store": "Emirates",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/emirates",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 185,
+    "store": "Freedom",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/freedom",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 186,
+    "store": "Pandora",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/pandora",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 187,
+    "store": "Mimco",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/mimco",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 188,
+    "store": "Casetify",
+    "cashback": "4.8%",
+    "link": "https://www.shopback.com.au/casetify",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 189,
+    "store": "OZSALE",
+    "cashback": "0.5%",
+    "link": "https://www.shopback.com.au/ozsale",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 190,
+    "store": "Powershop (Compare)",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/powershop",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 191,
+    "store": "Sunglass Hut",
+    "cashback": "9.1%",
+    "link": "https://www.shopback.com.au/sunglass-hut",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 192,
+    "store": "Superloop",
+    "cashback": "40%",
+    "link": "https://www.shopback.com.au/superloop",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 193,
+    "store": "Farfetch",
+    "cashback": "1.3%",
+    "link": "https://www.shopback.com.au/farfetch",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 194,
+    "store": "QT Hotels & Resorts",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/qt-hotels-resorts",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 195,
+    "store": "MACROS",
+    "cashback": "24.5%",
+    "link": "https://www.shopback.com.au/macros",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 196,
+    "store": "Moomoo",
+    "cashback": "100%",
+    "link": "https://www.shopback.com.au/moomoo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 197,
+    "store": "Revolve",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/revolve",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 198,
+    "store": "MAC Cosmetics",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/mac-cosmetics",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 199,
+    "store": "Superdry",
+    "cashback": "4.2%",
+    "link": "https://www.shopback.com.au/superdry",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 200,
+    "store": "Purebaby",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/purebaby",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 201,
+    "store": "Samsonite",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/samsonite",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 202,
+    "store": "Sussan",
+    "cashback": "1%",
+    "link": "https://www.shopback.com.au/sussan",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 203,
+    "store": "St Frock",
+    "cashback": "4.8%",
+    "link": "https://www.shopback.com.au/st-frock",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 204,
+    "store": "My Muscle Chef",
+    "cashback": "14%",
+    "link": "https://www.shopback.com.au/my-muscle-chef",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 205,
+    "store": "Boody Eco Wear",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/boody-eco-wear",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 206,
+    "store": "Petpost",
+    "cashback": "1.8%",
+    "link": "https://www.shopback.com.au/petpost",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 207,
+    "store": "Gorman",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/gorman",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 208,
+    "store": "Accor Plus",
+    "cashback": "4.8%",
+    "link": "https://www.shopback.com.au/accor-plus",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 209,
+    "store": "Oroton",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/oroton",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 210,
+    "store": "NET-A-PORTER",
+    "cashback": "8%",
+    "link": "https://www.shopback.com.au/net-a-porter",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 211,
+    "store": "RentalCars.com",
+    "cashback": "5.2%",
+    "link": "https://www.shopback.com.au/rentalcars",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 212,
+    "store": "Youi Insurance",
+    "cashback": "30%",
+    "link": "https://www.shopback.com.au/youi",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 213,
+    "store": "Modibodi",
+    "cashback": "9%",
+    "link": "https://www.shopback.com.au/modibodi",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 214,
+    "store": "Tommy Hilfiger",
+    "cashback": "5.6%",
+    "link": "https://www.shopback.com.au/tommy-hilfiger",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 215,
+    "store": "Tony Bianco",
+    "cashback": "11%",
+    "link": "https://www.shopback.com.au/tony-bianco",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 216,
+    "store": "American Tourister",
+    "cashback": "20%",
+    "link": "https://www.shopback.com.au/american-tourister",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 217,
+    "store": "LG AU",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/lg-au",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 218,
+    "store": "Chemist Direct",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/chemist-direct",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 219,
+    "store": "Sabo",
+    "cashback": "2.1%",
+    "link": "https://www.shopback.com.au/sabo-skirt",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 220,
+    "store": "Gymshark",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/gymshark",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 221,
+    "store": "Ecosa",
+    "cashback": "1%",
+    "link": "https://www.shopback.com.au/ecosa",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 222,
+    "store": "Lyca Mobile",
+    "cashback": "8%",
+    "link": "https://www.shopback.com.au/lyca-mobile",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 223,
+    "store": "Kayak",
+    "cashback": "0.52%",
+    "link": "https://www.shopback.com.au/kayak",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 224,
+    "store": "Saba",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/saba",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 225,
+    "store": "Binge",
+    "cashback": "38.5%",
+    "link": "https://www.shopback.com.au/binge",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 226,
+    "store": "Endota Spa",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/endota-spa",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 227,
+    "store": "Hype DC",
+    "cashback": "0.7%",
+    "link": "https://www.shopback.com.au/hype-dc",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 228,
+    "store": "NordVPN",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/nordvpn",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 229,
+    "store": "VetSupply",
+    "cashback": "4.2%",
+    "link": "https://www.shopback.com.au/vetsupply",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 230,
+    "store": "Alinta Energy (Compare)",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/alinta-energy",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 231,
+    "store": "HP Australia",
+    "cashback": "12%",
+    "link": "https://www.shopback.com.au/hp-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 232,
+    "store": "mycar Tyre & Auto",
+    "cashback": "2.4%",
+    "link": "https://www.shopback.com.au/mycar",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 233,
+    "store": "Ray-Ban",
+    "cashback": "9.1%",
+    "link": "https://www.shopback.com.au/ray-ban",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 234,
+    "store": "Apple Music",
+    "cashback": "$150",
+    "link": "https://www.shopback.com.au/apple-music",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 235,
+    "store": "Shark",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/shark-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 236,
+    "store": "QBD Books",
+    "cashback": "3.15%",
+    "link": "https://www.shopback.com.au/qbd-books",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 237,
+    "store": "Cotton On BODY",
+    "cashback": "16%",
+    "link": "https://www.shopback.com.au/cotton-on-body",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 238,
+    "store": "UGG Express",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/ugg-express",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 239,
+    "store": "ghd",
+    "cashback": "8.5%",
+    "link": "https://www.shopback.com.au/ghd",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 240,
+    "store": "L'occitane",
+    "cashback": "1.8%",
+    "link": "https://www.shopback.com.au/loccitane",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 241,
+    "store": "Calvin Klein",
+    "cashback": "5.6%",
+    "link": "https://www.shopback.com.au/calvin-klein",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 242,
+    "store": "Tick Travel Insurance",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/tick-travel-insurance",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 243,
+    "store": "The Oodie",
+    "cashback": "5.6%",
+    "link": "https://www.shopback.com.au/the-oodie",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 244,
+    "store": "COS",
+    "cashback": "5.3%",
+    "link": "https://www.shopback.com.au/cos",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 245,
+    "store": "Dusk",
+    "cashback": "5.6%",
+    "link": "https://www.shopback.com.au/dusk",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 246,
+    "store": "Styletread",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/styletread",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 247,
+    "store": "Supre",
+    "cashback": "4.25%",
+    "link": "https://www.shopback.com.au/supre",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 248,
+    "store": "Cathay Pacific",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/cathay-pacific",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 249,
+    "store": "Mocka",
+    "cashback": "1.8%",
+    "link": "https://www.shopback.com.au/mocka",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 250,
+    "store": "Experience Oz",
+    "cashback": "12%",
+    "link": "https://www.shopback.com.au/experience-oz",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 251,
+    "store": "Trainline",
+    "cashback": "14%",
+    "link": "https://www.shopback.com.au/trainline",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 252,
+    "store": "Betts",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/betts",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 253,
+    "store": "Aussie Broadband",
+    "cashback": "63%",
+    "link": "https://www.shopback.com.au/aussie-broadband-cimet",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 254,
+    "store": "Rockwear",
+    "cashback": "4.5%",
+    "link": "https://www.shopback.com.au/rockwear",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 255,
+    "store": "Oakley",
+    "cashback": "9.1%",
+    "link": "https://www.shopback.com.au/oakley",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 256,
+    "store": "Bupa Health Insurance",
+    "cashback": "$800",
+    "link": "https://www.shopback.com.au/bupa-health-insurance",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 257,
+    "store": "General Pants Co",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/general-pants-co",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 258,
+    "store": "Dyson Beauty",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/dyson-beauty",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 259,
+    "store": "Bose",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/bose",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 260,
+    "store": "Ink Station",
+    "cashback": "0.5%",
+    "link": "https://www.shopback.com.au/ink-station",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 261,
+    "store": "Jo Malone London",
+    "cashback": "5%",
+    "link": "https://www.shopback.com.au/jo-malone",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 262,
+    "store": "OVO Energy (Compare)",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/ovo-energy-compare",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 263,
+    "store": "Billini",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/billini",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 264,
+    "store": "Hoka",
+    "cashback": "2.25%",
+    "link": "https://www.shopback.com.au/hoka",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 265,
+    "store": "Mountain Warehouse",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/mountain-warehouse",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 266,
+    "store": "4WD Supacentre",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/4wd-supacentre",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 267,
+    "store": "Canningvale",
+    "cashback": "6.5%",
+    "link": "https://www.shopback.com.au/canningvale",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 268,
+    "store": "Sportscraft",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/sportscraft",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 269,
+    "store": "Who Gives A Crap",
+    "cashback": "1%",
+    "link": "https://www.shopback.com.au/who-gives-a-crap-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 270,
+    "store": "Dodo Power & Gas (Compare)",
+    "cashback": "$160",
+    "link": "https://www.shopback.com.au/dodo-power-and-gas",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 271,
+    "store": "EveryPlate",
+    "cashback": "70%",
+    "link": "https://www.shopback.com.au/everyplate",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 272,
+    "store": "East Coast Car Rentals",
+    "cashback": "10.5%",
+    "link": "https://www.shopback.com.au/east-coast-car-rentals",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 273,
+    "store": "Williams Shoes",
+    "cashback": "1.8%",
+    "link": "https://www.shopback.com.au/williams-shoes",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 274,
+    "store": "boohoo",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/boohoo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 275,
+    "store": "CAMILLA",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/camilla",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 276,
+    "store": "Aerre",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/aerre",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 277,
+    "store": "Brooks Running",
+    "cashback": "4.2%",
+    "link": "https://www.shopback.com.au/brooks-running",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 278,
+    "store": "JSHealth Vitamins",
+    "cashback": "9.1%",
+    "link": "https://www.shopback.com.au/jshealth-vitamins",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 279,
+    "store": "Hostelworld",
+    "cashback": "2.25%",
+    "link": "https://www.shopback.com.au/hostelworld",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 280,
+    "store": "SkinCeuticals",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/skinceuticals",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 281,
+    "store": "Lacoste",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/lacoste",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 282,
+    "store": "Sheridan Outlet",
+    "cashback": "3.6%",
+    "link": "https://www.shopback.com.au/sheridan-outlet",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 283,
+    "store": "Surfshark VPN",
+    "cashback": "98%",
+    "link": "https://www.shopback.com.au/surfshark",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 284,
+    "store": "MYOB",
+    "cashback": "48%",
+    "link": "https://www.shopback.com.au/myob",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 285,
+    "store": "T2 Tea",
+    "cashback": "3%",
+    "link": "https://www.shopback.com.au/t2-tea",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 286,
+    "store": "Autobarn",
+    "cashback": "1.8%",
+    "link": "https://www.shopback.com.au/autobarn",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 287,
+    "store": "Suzanne Grae",
+    "cashback": "7.7%",
+    "link": "https://www.shopback.com.au/suzanne-grae",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 288,
+    "store": "InsureandGo Travel Insurance",
+    "cashback": "4%",
+    "link": "https://www.shopback.com.au/insureandgo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 289,
+    "store": "Omio",
+    "cashback": "6%",
+    "link": "https://www.shopback.com.au/omio",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 290,
+    "store": "Soulara",
+    "cashback": "24.5%",
+    "link": "https://www.shopback.com.au/soulara",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 291,
+    "store": "Clearly",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/clearly",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 292,
+    "store": "Etihad Airways",
+    "cashback": "0.25%",
+    "link": "https://www.shopback.com.au/etihad-airways",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 293,
+    "store": "The Memo",
+    "cashback": "1.8%",
+    "link": "https://www.shopback.com.au/the-memo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 294,
+    "store": "Singapore Airlines",
+    "cashback": "0.25%",
+    "link": "https://www.shopback.com.au/singapore-airlines",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 295,
+    "store": "Ally Fashion",
+    "cashback": "5.4%",
+    "link": "https://www.shopback.com.au/ally-fashion",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 296,
+    "store": "The North Face",
+    "cashback": "2.6%",
+    "link": "https://www.shopback.com.au/the-north-face",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 297,
+    "store": "KKday",
+    "cashback": "3.5%",
+    "link": "https://www.shopback.com.au/kkday",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 298,
+    "store": "Southern Cross Travel Insurance",
+    "cashback": "22%",
+    "link": "https://www.shopback.com.au/southern-cross-travel-insurance",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 299,
+    "store": "Coach",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/coach-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 300,
+    "store": "Levi's",
+    "cashback": "6.3%",
+    "link": "https://www.shopback.com.au/levis",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 301,
+    "store": "Dell",
+    "cashback": "1.5%",
+    "link": "https://www.shopback.com.au/dell-australia",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 302,
+    "store": "De'Longhi",
+    "cashback": "10%",
+    "link": "https://www.shopback.com.au/delonghi",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 303,
+    "store": "Adobe",
+    "cashback": "50%",
+    "link": "https://www.shopback.com.au/adobe",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 304,
+    "store": "Nude Lucy",
+    "cashback": "2%",
+    "link": "https://www.shopback.com.au/nude-lucy",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 305,
+    "store": "Sheet Society",
+    "cashback": "2.5%",
+    "link": "https://www.shopback.com.au/sheet-society",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 306,
+    "store": "SHIELS",
+    "cashback": "3.6%",
+    "link": "https://www.shopback.com.au/shiels",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 307,
+    "store": "Sheridan",
+    "cashback": "4.8%",
+    "link": "https://www.shopback.com.au/sheridan",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 308,
+    "store": "digiDirect",
+    "cashback": "0.5%",
+    "link": "https://www.shopback.com.au/digidirect",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 309,
+    "store": "Marley Spoon",
+    "cashback": "12.5%",
+    "link": "https://www.shopback.com.au/marley-spoon",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 310,
+    "store": "Lasoo",
+    "cashback": "7%",
+    "link": "https://www.shopback.com.au/lasoo",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 311,
+    "store": "Fast Cover Travel Insurance",
+    "cashback": "8%",
+    "link": "https://www.shopback.com.au/fast-cover",
+    "scraped_at": "2025-09-14 07:34:39"
+  },
+  {
+    "id": 312,
+    "store": "Taking Shape",
+    "cashback": "8.4%",
+    "link": "https://www.shopback.com.au/taking-shape",
+    "scraped_at": "2025-09-14 07:34:39"
+  }
+]
