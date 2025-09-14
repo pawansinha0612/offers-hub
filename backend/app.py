@@ -114,29 +114,28 @@ async def scrape_shopback():
         # --- Scroll until all offers are loaded ---
         prev_count = 0
         stable_scrolls = 0
-        max_scroll_attempts = 20  # Increased to allow more scrolls
+        max_scroll_attempts = 50  # Increase max scrolls to cover more stores
         scroll_count = 0
         while scroll_count < max_scroll_attempts:
-            await page.mouse.wheel(0, 1000)
-            await asyncio.sleep(2.0)
+            # Scroll by a smaller increment
+            await page.mouse.wheel(0, 800)
+            await asyncio.sleep(2.5)  # Slightly longer sleep for network fetch
             cards = await page.query_selector_all("div.cursor_pointer.pos_relative")
             print(f"Loaded {len(cards)} store cards so far after scroll {scroll_count + 1}")
+
             if len(cards) == prev_count:
                 stable_scrolls += 1
             else:
                 stable_scrolls = 0
-            if stable_scrolls >= 3:
+
+            if stable_scrolls >= 5:  # Wait for 5 consecutive scrolls without new cards
                 break
+
             prev_count = len(cards)
             scroll_count += 1
 
-        # --- Log network requests ---
-        requests = await page.evaluate("""
-            () => Array.from(performance.getEntriesByType('resource'))
-                .filter(r => r.initiatorType === 'fetch' || r.initiatorType === 'xmlhttprequest')
-                .map(r => ({ name: r.name, duration: r.duration }))
-        """)
-        print(f"Network requests: {requests}")
+        # --- Extra wait to ensure lazy-loaded offers ---
+        await asyncio.sleep(3)
 
         # --- Collect all offers ---
         offers_list = []
@@ -155,6 +154,7 @@ async def scrape_shopback():
         await browser.close()
         print(f"✅ Total offers scraped: {len(offers_list)}")
         return offers_list
+
 
 def run_scrape_sync():
     try:
