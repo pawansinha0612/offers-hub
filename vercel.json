@@ -1,7 +1,8 @@
 {
-  "functions": {
-    "frontend/api/scrape-offers.py": {
+  "crons": [
+    {
+      "path": "/api/scrape-offers",
       "schedule": "*/5 * * * *"
     }
-  }
+  ]
 }
