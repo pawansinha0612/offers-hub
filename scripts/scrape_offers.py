@@ -78,10 +78,19 @@ async def scrape_shopback():
 # --- Main ---
 def main():
     offers = asyncio.run(scrape_shopback())
+
+    # Wrap offers with last_updated timestamp
+    data_to_save = {
+        "last_updated": datetime.now().isoformat(),
+        "offers": offers
+    }
+
     os.makedirs(os.path.dirname(FRONTEND_JSON_PATH), exist_ok=True)
     with open(FRONTEND_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(offers, f, indent=2)
-    print(f"✅ Offers saved to {FRONTEND_JSON_PATH}")
+        json.dump(data_to_save, f, indent=2)
+
+    print(f"✅ Offers saved to {FRONTEND_JSON_PATH} (total {len(offers)} offers)")
+
 
 if __name__ == "__main__":
     main()

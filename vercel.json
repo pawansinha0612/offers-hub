@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "frontend/api/scrape-offers.py": {
+      "schedule": "*/5 * * * *"
+    }
+  }
+}
