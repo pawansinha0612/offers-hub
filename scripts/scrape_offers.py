@@ -14,19 +14,29 @@ def normalize_cashback(cashback_raw: str) -> str:
     if not cashback_raw:
         return "N/A"
     cb = cashback_raw.strip()
+
+    # Explicit % case
     if "%" in cb:
         try:
             val = float(cb.replace("%", "").strip())
             return f"{val}%" if val <= 100 else f"${int(val)}"
         except:
             return cb
+
+    # Explicit $ case
     if "$" in cb:
         return cb
+
+    # Pure number case
     try:
         val = float(cb)
-        return f"{val:g}%" if val <= 100 else f"${int(val)}"
+        # Fix: values > 50 are almost certainly dollars, not percentages
+        if val > 50:
+            return f"${int(val)}"
+        return f"{val:g}%"
     except ValueError:
         return cb
+
 
 # --- Scraper ---
 async def scrape_shopback():
